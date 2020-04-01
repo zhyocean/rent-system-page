@@ -2,10 +2,14 @@
   <div class="carousel-main">
     <el-carousel height="500px" :interval="5000" arrow="always">
       <el-carousel-item v-for="item in 4" :key="item">
-        <img src="@/assets/pic.jpg">
+        <img src="@/assets/home_back.jpg">
       </el-carousel-item>
     </el-carousel>
     <div class="search-box">
+      <div class="box-word">
+        <h1>品质租房选如家</h1>
+        <p>用科技改善生活</p>
+      </div>
       <div class="box-left">
         <el-dropdown>
           <span class="el-dropdown-link search-title">
@@ -57,10 +61,23 @@ export default {
     }
     .search-box{
       position: absolute;
-      top: 60%;
+      top: 30%;
       left: 20%;
       z-index: 2;
     }
+    .box-word{
+      margin-bottom: 30px;
+    }
+      .box-word h1{
+        font-size: 60px;
+        color: #fff;
+        margin: 0 0 12px -5px;
+      }
+      .box-word p{
+        font-size: 25px;
+        color: #fff;
+        margin: 0;
+      }
       .box-left{
         padding: 10px 0px 10px 20px;
         background-color: #fff;

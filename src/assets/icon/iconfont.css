@@ -1,0 +1,25 @@
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1585915382530'); /* IE9 */
+  src: url('iconfont.eot?t=1585915382530#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAPIAAsAAAAACGAAAAN6AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDBgqERINeATYCJAMMCwgABCAFhG0HORsnBxHVm7vIfh5kZ4vTOOtM+Sjnq2gXjf0ePP+fy92Xn6apuSDuPoLrEnac2f9tnXhJCwmLV7Vr/7KvwHhjnARAwP9x7/T/xnlZNp9lucyx/FMXYNgFlI61tYusQNI4AGyp3cEBXPmn8xDAlUjSkeo16zfHRMefJoD079OrC2ZDjz5RKpgIxsBaHVmME6Y2R7vPjEXZ++UXjZig4aTw5zbuWaM7lb/Gfk1Ukx2T2ycIgv2sgNgECkgHdJCOg/bWqCKejsLVluvTuQY6grZXyOHI+I7SuOkfTwMx8OXumJic0OBrbMSCwNdEPRrGq8kG4AocBT4jtf/aw0xfH9fg2FhPcfcc1ErstpY2S/NAsshibdGlVYtW8mxK06dzGwein/d4cpMW3eYGtl25KqDNCv9uzfdbaq7cGXg2cu22sFaH7DVW7Ag4E7Fmc+vlsnz7zrVBQf6pVloBrL2Km69psWXQql07Vvj7k6+2Llq1bu1Of1m5c/vqgBY9Xa3WFnZ7K5utpcUypP+Mo09HXKNsnn64SV6zrCNpeU2qYH77oPwFf4Zfa1dz/HgSFyR0W9A0tuuCrsUD/v+ff9nwb+UeaEls7W50PT+r6uRNHRIzj85fVf5ibPHLKpMatIxj83el9f3QC3r6Onc2/WJbUvLgYMXBFOXbUztMG1O0av7RiicaN03cNf5a8FSfFn7moBFvD2VOmsclwvSeQeYv/1TL7QXrP0mDDXfuVAioOb/FZqnWpk01Caxt2wiWt63qtGnTYMEsB53xJ6rLSsChNiuv//wZ1l5/2KSTV/lf000H4OWBmv8yr0MH5gTzLTgE/qoAWKE7It+gdIsf8b2UYhHmO+NirlTwL8sBfHm7XhkAJoEoAyrQcCYCFCbxqE5MByfcyAcDk0rgShq1Nrvhx1AUorsAqcxAIHhzCDQ8uQQKbx6gOvENOBHIHzDwFgWutBS/Pd1IFDIeToxK0IL+QzTUu9Akh7z0jn5qFddFGfWNPMYQ1EXVTt2wR95jwfjxjYgDx9TBFV2GbUswMCU0UgSR4ViWbuhJhaFuduDEqAQt6D9EQ71Lasuh8/o7+qlVPIFps7+Rx9g81EUFQG/yHoR5l8Hjxzcijk5yTB1csRXbIE4wDI9KaKQIK6LDsSTVHFRenK/snm8D4Ip/tBJNlOisu8Rf7Leieu8nms0AAAA=') format('woff2'),
+  url('iconfont.woff?t=1585915382530') format('woff'),
+  url('iconfont.ttf?t=1585915382530') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1585915382530#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.iconaixin:before {
+  content: "\e622";
+}
+
+.icontangguo:before {
+  content: "\e626";
+}
+

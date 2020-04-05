@@ -1,8 +1,9 @@
 <template>
   <div class="warpper">
+      <!-- 如家服务 -->
       <div class="rj-service">
         <div class="service-title">
-          <img src="@/assets/title_bg.png"> 如家服务 <img src="@/assets/title_bg.png">
+          <img class="title-pic" src="@/assets/title_bg.png"> 如家服务 <img class="title-pic" src="@/assets/title_bg.png">
           <div class="vice-title">/为您提供最优质的服务/</div>
         </div>
         <div class="service-pics">
@@ -36,13 +37,72 @@
           </div>
         </div>
       </div>
+      <!-- 房屋出租 -->
       <div class="rj-rental-housing">
         <div class="rental-title">
-          <img src="@/assets/title_bg.png"> 房屋出租 <img src="@/assets/title_bg.png">
+          <img class="title-pic" src="@/assets/title_bg.png"> 房屋出租 <img class="title-pic" src="@/assets/title_bg.png">
           <div class="vice-title">/为您选择最适合的租客/</div>
         </div>
         <div class="rental-main">
-
+          <div class="rental-steps">
+            <div class="step">
+              <div class="rental-step-pic">
+                <img src="@/assets/step1.png">
+              </div>
+              <div>
+                <h3>提交委托信息</h3>
+                <p>提交基本信息在线委托，或直接拨打委托热线</p>
+              </div>
+            </div>
+            <div class="step-icon">
+              <span class="iconfont">&#xe62d;</span>
+            </div>
+            <div class="step">
+              <div class="rental-step-pic">
+                <img src="@/assets/step2.png">
+              </div>
+              <div>
+                <h3>与管家沟通</h3>
+                <p>业主服务中心30分钟内给您回电，指派专属管家</p>
+              </div>
+            </div>
+            <div class="step-icon">
+              <span class="iconfont">&#xe62d;</span>
+            </div>
+            <div class="step">
+              <div class="rental-step-pic">
+                <img src="@/assets/step3.png">
+              </div>
+              <div>
+                <h3>制定出租方案</h3>
+                <p>管家上门实勘报价，制定出租委托方案</p>
+              </div>
+            </div>
+            <div class="step-icon">
+              <span class="iconfont">&#xe62d;</span>
+            </div>
+            <div class="step">
+              <div class="rental-step-pic">
+                <img src="@/assets/step4.png">
+              </div>
+              <div>
+                <h3>成为如家业主</h3>
+                <p>签署出租委托协议，尊享自如资产管理服务</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 精选房源 -->
+      <div class="rj-select-properties">
+        <div class="properties-title">
+          <img class="title-pic" src="@/assets/title_bg.png"> 精选房源 <img class="title-pic" src="@/assets/title_bg.png">
+          <div class="vice-title">/为您选择最优质的房源/</div>
+        </div>
+        <div class="properties-main">
+          <div class="properties-left">
+            12
+          </div>
         </div>
       </div>
   </div>
@@ -55,16 +115,13 @@ export default {
 </script>
 
 <style>
-  .service-title,.rental-title{
+  .service-title,.rental-title,.properties-title{
       margin: 60px auto 50px;
       font-size: 30px;
       color: rgba(0,0,0,.85);
       text-align: center;
   }
-    .service-title img{
-      width: 25px;
-    }
-    .rental-title img{
+    .title-pic{
       width: 25px;
     }
     .vice-title{
@@ -103,4 +160,26 @@ export default {
         color: rgba(0,0,0,.4);
         margin: 0;
       }
-</style>
+  .rental-main{
+    text-align: center;
+  }
+    .step{
+      display: inline-block;
+      width: 220px;
+      margin-left: 50px;
+      margin-right: 50px;
+    }
+    .step-icon{
+      position: absolute;
+      transform: translateY(100px);
+      display: inline-block;
+    }
+  .properties-main{
+    text-align: center;
+  }
+    .properties-left{
+      border: solid 1px #e6e6e6;
+      width: 700px;
+      margin: 0 auto;
+    }
+  </style>

@@ -100,8 +100,29 @@
           <div class="vice-title">/为您选择最优质的房源/</div>
         </div>
         <div class="properties-main">
-          <div class="properties-left">
-            12
+          <div>
+            <div class="properties-left">
+            <div class="properties-top">
+              <img src="@/assets/p.jpg">
+            </div>
+            <div class="properties-bottom">
+              <div>
+                <div class="more-word">精选优质房源，为你消除一切租房难题</div>
+                <div class="more-btn"><el-button type="danger" plain>更多房源</el-button></div>
+              </div>
+            </div>
+          </div>
+          <div class="properties-right">
+            <div class="sm-property">
+              <img src="@/assets/service_pic1.jpg">
+            </div>
+            <div class="sm-property">
+              <img src="@/assets/service_pic1.jpg">
+            </div>
+            <div class="sm-property">
+              <img src="@/assets/service_pic1.jpg">
+            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -175,11 +196,50 @@ export default {
       display: inline-block;
     }
   .properties-main{
+    position: relative;
     text-align: center;
   }
     .properties-left{
-      border: solid 1px #e6e6e6;
-      width: 700px;
+      width: 1000px;
       margin: 0 auto;
+      display: inline-block;
+      transform: translateX(-200px);
     }
+      .properties-bottom{
+        transform: translateY(-60px);
+        height: 60px;
+        background-color: #26020266;
+      }
+        .more-word{
+          font-style: oblique;
+          color: #67C23A;
+          position: absolute;
+          top: 30%;
+          left: 30px;
+        }
+        .more-btn{
+          position: absolute;
+          top: 20%;
+          right: 3%;
+        }
+        .properties-top img{
+          width: 100%;
+          height: 100%;
+        }
+    .properties-right{
+      display: inline-block;
+      top: 0;
+      position: absolute;
+      margin-left: 30px;
+      transform: translateX(-200px);
+    }
+      .sm-property{
+        width: 250px;
+        margin-bottom: 25px;
+        height: 150px;
+        overflow: hidden;
+      }
+        .sm-property img{
+          width: 100%;
+        }
   </style>

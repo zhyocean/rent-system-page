@@ -2,13 +2,33 @@
   <el-row :gutter="20" class="header-row">
     <el-col :span="4" :offset="3">
       <router-link to="/">
-        <img class="header_logo" src="@/assets/header_logo.png" alt="">
+        <img class="header_logo" src="@/assets/home/header_logo.png" alt="">
       </router-link>
+      <div class="now-city">
+        <el-dropdown>
+          <span class="iconfont el-dropdown-link" style="color:#fff;margin-left: 7px;">&#xe638;北京</span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>北京</el-dropdown-item>
+            <el-dropdown-item>上海</el-dropdown-item>
+            <el-dropdown-item>深圳</el-dropdown-item>
+            <el-dropdown-item>西安</el-dropdown-item>
+            <el-dropdown-item>成都</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
     </el-col>
     <el-col :span="7" :offset="3">
       <el-menu :default-active="activeIndex" class="el-menu-demo header-col" mode="horizontal" @select="handleSelect">
-        <el-menu-item index="1" class="header-word">首页</el-menu-item>
-        <el-menu-item index="2" class="header-word">租房</el-menu-item>
+        <el-menu-item index="1" class="header-word">
+          <router-link class="header-word-router" to="/">
+            首页
+          </router-link>
+        </el-menu-item>
+        <el-menu-item index="2" class="header-word">
+          <router-link class="header-word-router" to="/room">
+            租房
+          </router-link>
+        </el-menu-item>
         <el-menu-item index="3" class="header-word">服务</el-menu-item>
         <el-menu-item index="4" class="header-word">生活</el-menu-item>
       </el-menu>
@@ -102,12 +122,28 @@ export default {
     .header_logo{
       height: 60px;
     }
+    .now-city{
+      display: inline-block;
+      position: absolute;
+      top: 30%;
+      margin-left: 15px;
+      font-size: 14px;
+      background-color: #a6adac;
+      border-radius: 13px;
+      width: 68px;
+      height: 26px;
+      line-height: 26px;
+      cursor: pointer;
+    }
     .header-col{
       border-bottom: solid 0px #fff;
     }
       .header-word{
         font-size: 16px;
       }
+        .header-word-router{
+          text-decoration: none;
+        }
     .header-log-reg{
       margin-left: 330px;
       position: absolute;

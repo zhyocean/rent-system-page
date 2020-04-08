@@ -14,14 +14,14 @@
                             <span>客服热线</span>
                         </div>
                         <div class="rj-logo">
-                            <img src="@/assets/header_logo.png">
+                            <img src="@/assets/home/header_logo.png">
                         </div>
                         <div class="rj-sign">
                             <a class="footer-sign" href="http://www.beian.miit.gov.cn" rel="nofollow" target="_blank">©
                             2020
                             蜀ICP备18000229号 </a>
                             <div>
-                                <img src="@/assets/public_logo.png">
+                                <img src="@/assets/home/public_logo.png">
                             <a class="footer-sign" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51011402000164" rel="nofollow" target="_blank">川公网安备 51011402000164号 </a>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
             <el-col :span="8">
                 <div class="promote">
                     <div class="promote-img">
-                        <img src="@/assets/qyx.png">
+                        <img src="@/assets/home/qyx.png">
                         <span>企优享</span>
                     </div>
                     <div class="promote-img">

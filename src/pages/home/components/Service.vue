@@ -1,9 +1,9 @@
 <template>
-  <div class="warpper">
+  <div class="wrapper">
       <!-- 如家服务 -->
       <div class="rj-service">
         <div class="service-title">
-          <img class="title-pic" src="@/assets/title_bg.png"> 如家服务 <img class="title-pic" src="@/assets/title_bg.png">
+          <img class="title-pic" src="@/assets/home/title_bg.png"> 如家服务 <img class="title-pic" src="@/assets/home/title_bg.png">
           <div class="vice-title">/为您提供最优质的服务/</div>
         </div>
         <div class="service-pics">
@@ -40,14 +40,14 @@
       <!-- 房屋出租 -->
       <div class="rj-rental-housing">
         <div class="rental-title">
-          <img class="title-pic" src="@/assets/title_bg.png"> 房屋出租 <img class="title-pic" src="@/assets/title_bg.png">
+          <img class="title-pic" src="@/assets/home/title_bg.png"> 房屋出租 <img class="title-pic" src="@/assets/home/title_bg.png">
           <div class="vice-title">/为您选择最适合的租客/</div>
         </div>
         <div class="rental-main">
           <div class="rental-steps">
             <div class="step">
               <div class="rental-step-pic">
-                <img src="@/assets/step1.png">
+                <img src="@/assets/home/step1.png">
               </div>
               <div>
                 <h3>提交委托信息</h3>
@@ -59,7 +59,7 @@
             </div>
             <div class="step">
               <div class="rental-step-pic">
-                <img src="@/assets/step2.png">
+                <img src="@/assets/home/step2.png">
               </div>
               <div>
                 <h3>与管家沟通</h3>
@@ -71,7 +71,7 @@
             </div>
             <div class="step">
               <div class="rental-step-pic">
-                <img src="@/assets/step3.png">
+                <img src="@/assets/home/step3.png">
               </div>
               <div>
                 <h3>制定出租方案</h3>
@@ -83,7 +83,7 @@
             </div>
             <div class="step">
               <div class="rental-step-pic">
-                <img src="@/assets/step4.png">
+                <img src="@/assets/home/step4.png">
               </div>
               <div>
                 <h3>成为如家业主</h3>
@@ -96,14 +96,14 @@
       <!-- 精选房源 -->
       <div class="rj-select-properties">
         <div class="properties-title">
-          <img class="title-pic" src="@/assets/title_bg.png"> 精选房源 <img class="title-pic" src="@/assets/title_bg.png">
+          <img class="title-pic" src="@/assets/home/title_bg.png"> 精选房源 <img class="title-pic" src="@/assets/home/title_bg.png">
           <div class="vice-title">/为您选择最优质的房源/</div>
         </div>
         <div class="properties-main">
           <div>
             <div class="properties-left">
             <div class="properties-top">
-              <img src="@/assets/p.jpg">
+              <img src="@/assets/home/p.jpg">
             </div>
             <div class="properties-bottom">
               <div>
@@ -114,13 +114,13 @@
           </div>
           <div class="properties-right">
             <div class="sm-property">
-              <img src="@/assets/service_pic1.jpg">
+              <img src="@/assets/home/service_pic1.jpg">
             </div>
             <div class="sm-property">
-              <img src="@/assets/service_pic1.jpg">
+              <img src="@/assets/home/service_pic1.jpg">
             </div>
             <div class="sm-property">
-              <img src="@/assets/service_pic1.jpg">
+              <img src="@/assets/home/service_pic1.jpg">
             </div>
           </div>
           </div>

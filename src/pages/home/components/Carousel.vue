@@ -2,7 +2,7 @@
   <div class="carousel-main">
     <el-carousel height="500px" :interval="5000" arrow="always">
       <el-carousel-item v-for="item in 4" :key="item">
-        <img src="@/assets/home_back.jpg">
+        <img src="@/assets/home/home_back.jpg">
       </el-carousel-item>
     </el-carousel>
     <div class="search-box">

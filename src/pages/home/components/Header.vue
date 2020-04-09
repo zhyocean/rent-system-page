@@ -141,9 +141,12 @@ export default {
       .header-word{
         font-size: 16px;
       }
-        .header-word-router{
-          text-decoration: none;
+        .el-menu.el-menu--horizontal{
+          border-bottom: solid 0px #fff;
         }
+          .header-word-router{
+            text-decoration: none;
+          }
     .header-log-reg{
       margin-left: 330px;
       position: absolute;

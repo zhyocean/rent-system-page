@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="box-right">
-        <el-button type="warning">开始找房</el-button>
+        <el-button class="find-house-btn" type="warning">开始找房</el-button>
       </div>
     </div>
   </div>
@@ -108,4 +108,9 @@ export default {
       .box-right{
         display: inline-block;
       }
+        .find-house-btn{
+          transform: translateX(-5px);
+          height: 52px;
+          width: 120px;
+        }
 </style>

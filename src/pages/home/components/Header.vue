@@ -6,7 +6,7 @@
       </router-link>
       <div class="now-city">
         <el-dropdown>
-          <span class="iconfont el-dropdown-link" style="color:#fff;margin-left: 7px;">&#xe638;北京</span>
+          <span class="iconfont el-dropdown-link" style="color:#fff;margin-left: 7px;">&#xe638;{{city}}</span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>北京</el-dropdown-item>
             <el-dropdown-item>上海</el-dropdown-item>
@@ -88,6 +88,9 @@
 <script>
 export default {
   name: 'HomeHeader',
+  props: {
+    city: String
+  },
   data () {
     return {
       loginDialogVisible: false,

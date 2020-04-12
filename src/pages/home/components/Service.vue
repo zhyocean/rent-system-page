@@ -135,7 +135,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .service-title,.rental-title,.properties-title{
       margin: 60px auto 50px;
       font-size: 30px;

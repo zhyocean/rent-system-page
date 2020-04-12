@@ -11,16 +11,12 @@
         <p>用科技改善生活</p>
       </div>
       <div class="box-left">
-        <el-dropdown>
+        <el-dropdown @command="changeCity">
           <span class="el-dropdown-link search-title">
-            城市<i class="el-icon-arrow-down el-icon--right"></i>
+            {{this.$store.state.city}}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>北京</el-dropdown-item>
-            <el-dropdown-item>上海</el-dropdown-item>
-            <el-dropdown-item>深圳</el-dropdown-item>
-            <el-dropdown-item>西安</el-dropdown-item>
-            <el-dropdown-item>成都</el-dropdown-item>
+            <el-dropdown-item v-for="(item, index) of this.$store.state.citys" :key="index" :command="item">{{item}}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <div class="search-text">
@@ -36,11 +32,16 @@
 
 <script>
 export default {
-  name: 'HomeCarousel'
+  name: 'HomeCarousel',
+  methods: {
+    changeCity (command) {
+      this.$store.commit('commitCity', command)
+    }
+  }
 }
 </script>
 
-<style>
+<style scoped>
   .carousel-main{
     position: relative;
   }

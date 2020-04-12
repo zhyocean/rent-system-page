@@ -1,12 +1,11 @@
 <template>
   <div>
-    <home-header
-      :city="city"
-    ></home-header>
+    <home-header></home-header>
     <room-search
       :area="area"
       :subway="subway"
     ></room-search>
+    <room-result></room-result>
     <home-footer></home-footer>
   </div>
 </template>
@@ -15,6 +14,7 @@
 import axios from 'axios'
 import HomeHeader from '../home/components/Header'
 import RoomSearch from './components/Search'
+import RoomResult from './components/Result'
 import HomeFooter from '../home/components/Footer'
 
 export default {
@@ -22,11 +22,11 @@ export default {
   components: {
     HomeHeader,
     RoomSearch,
+    RoomResult,
     HomeFooter
   },
   data () {
     return {
-      city: '北京',
       area: [],
       subway: []
     }
@@ -42,7 +42,7 @@ export default {
       var data = res.data
       if (ret && data) {
         for (var thisCity in data) {
-          if (thisCity === this.city) {
+          if (thisCity === this.$store.state.city) {
             this.area = data[thisCity]['area']
             this.subway = data[thisCity]['subway']
           }
@@ -52,6 +52,16 @@ export default {
   },
   mounted () {
     this.getSearchInfo()
+  },
+  computed: {
+    city () {
+      return this.$store.state.city
+    }
+  },
+  watch: {
+    city () {
+      this.getSearchInfo()
+    }
   }
 }
 </script>

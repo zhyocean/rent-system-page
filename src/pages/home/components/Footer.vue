@@ -2,9 +2,7 @@
     <div class="footer-main">
         <el-row :gutter="20">
             <el-col :span="4">
-                <div class="hidden">
-                    1
-                </div>
+                <div class="hidden"></div>
             </el-col>
             <el-col :span="7">
                 <div class="about-us">
@@ -58,6 +56,7 @@ export default {
     }
         .hidden{
             color: #212121;
+            min-height: 36px;
         }
         .about-us{
             margin-top: 80px;

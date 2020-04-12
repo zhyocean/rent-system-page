@@ -5,14 +5,10 @@
         <img class="header_logo" src="@/assets/home/header_logo.png" alt="">
       </router-link>
       <div class="now-city">
-        <el-dropdown>
-          <span class="iconfont el-dropdown-link" style="color:#fff;margin-left: 7px;">&#xe638;{{city}}</span>
+        <el-dropdown  @command="changeCity">
+          <span class="iconfont el-dropdown-link" style="color:#fff;margin-left: 7px;">&#xe638;{{this.$store.state.city}}</span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>北京</el-dropdown-item>
-            <el-dropdown-item>上海</el-dropdown-item>
-            <el-dropdown-item>深圳</el-dropdown-item>
-            <el-dropdown-item>西安</el-dropdown-item>
-            <el-dropdown-item>成都</el-dropdown-item>
+            <el-dropdown-item v-for="(item, index) of this.$store.state.citys" :key="index" :command="item">{{item}}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -112,6 +108,9 @@ export default {
   methods: {
     swichAccontHook () {
       this.loginMethod = (this.loginMethod === 'account-login' ? 'phone-login' : 'account-login')
+    },
+    changeCity (command) {
+      this.$store.commit('commitCity', command)
     }
   }
 }

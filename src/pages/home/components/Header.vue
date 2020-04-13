@@ -21,7 +21,7 @@
           </router-link>
         </el-menu-item>
         <el-menu-item index="2" class="header-word">
-          <router-link class="header-word-router" to="/room">
+          <router-link class="header-word-router" to="/rent">
             租房
           </router-link>
         </el-menu-item>

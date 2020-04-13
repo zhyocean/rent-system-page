@@ -108,7 +108,9 @@
             <div class="properties-bottom">
               <div>
                 <div class="more-word">精选优质房源，为你消除一切租房难题</div>
-                <div class="more-btn"><el-button type="danger" plain>更多房源</el-button></div>
+                <router-link to="/rent">
+                  <div class="more-btn"><el-button type="danger" plain>更多房源</el-button></div>
+                </router-link>
               </div>
             </div>
           </div>

@@ -115,7 +115,7 @@
 
 <script>
 export default {
-  name: 'Room',
+  name: 'Search',
   props: {
     area: Array,
     subway: Array

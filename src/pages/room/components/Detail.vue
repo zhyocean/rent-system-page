@@ -11,23 +11,131 @@
       </el-breadcrumb>
     </div>
     <div class="room-info">
+      <!-- 房屋介绍轮播图 -->
       <div class="room-carousel">
-        <el-carousel trigger="click" indicator-position="outside">
-          <el-carousel-item v-for="item in 4" :key="item">
-            <h3>{{ item }}</h3>
-          </el-carousel-item>
-        </el-carousel>
+        <thumb-carousel></thumb-carousel>
+      </div>
+      <div class="rj-info">
+        <div class="rj-title">
+          <el-tag class="item-tag" effect="dark" type="info">转</el-tag>
+          <h2>自如友家·三环新城7号院·3居室-02卧</h2>
+        </div>
+        <div class="rj-price">
+          ￥<span>8600</span>/月（季付价）
+        </div>
+        <p class="price-rule">
+          服务费另计，详情见
+          <el-button class="payment-method" type="text" @click="dialogPaymentMethod = true">付款方式</el-button>
+          <el-dialog class="dialog-title" title="付款方式" :visible.sync="dialogPaymentMethod">
+            <el-table class="dialog-item" :data="paymentData">
+              <el-table-column property="paymentMethod" label="付款方式" width="150"></el-table-column>
+              <el-table-column property="rent" label="租金" width="200"></el-table-column>
+              <el-table-column property="serviceCharge" label="服务费/年"></el-table-column>
+              <el-table-column property="cashPledge" label="押金"></el-table-column>
+            </el-table>
+            <div class="instructions">
+              <p>说明</p>
+              <p>1.目前仅支持网上签约</p>
+              <p>2.押金会在您办理解约时一并返还</p>
+              <p>3.解约时，未发生的租金和服务费按月结算</p>
+            </div>
+          </el-dialog>
+        </p>
+        <div class="rj-tags">
+          <span class="tag">可预签7天</span>
+          <span class="tag">深呼吸1.0</span>
+          <span class="tag">拿铁4.0</span>
+          <span class="tag">可长租一年</span>
+          <span class="tag">非首次出租</span>
+          <span class="tag">可长租一年</span>
+          <span class="tag">非首次出租</span>
+        </div>
+        <el-divider class="rj-divider"></el-divider>
+        <el-row class="home-info" :gutter="20">
+          <el-col :span="6">
+            <p class="home-info-title">建筑面积</p>
+            <p class="home-info-data">86㎡</p>
+          </el-col>
+          <el-col :span="6">
+            <p class="home-info-title">朝向</p>
+            <p class="home-info-data">朝南北</p>
+            </el-col>
+          <el-col :span="6">
+            <p class="home-info-title">户型</p>
+            <p class="home-info-data">2室1厅</p>
+          </el-col>
+        </el-row>
+        <el-divider class="rj-divider"></el-divider>
+        <div class="rj-home-info">
+          <span class="title">位置</span>
+          <span class="info">小区距郭庄子站步行约358米</span>
+        </div>
+        <el-divider class="rj-divider"></el-divider>
+        <div class="rj-home-info">
+          <div class="title">楼层</div>
+          <div class="info">1/28</div>
+        </div>
+        <el-divider class="rj-divider"></el-divider>
+        <div class="rj-home-info">
+          <div class="title">电梯</div>
+          <div class="info">无</div>
+        </div>
+        <el-divider class="rj-divider"></el-divider>
+        <div class="rj-home-info">
+          <div class="title">区域</div>
+          <div class="info">
+            <span class="area-item">丰台区</span>
+            <span class="area-item">刘家窑</span>
+            <span class="area-item">福臻家园</span>
+          </div>
+        </div>
+        <el-divider class="rj-divider"></el-divider>
+        <div class="rj-home-info">
+          <div class="title">年代</div>
+          <div class="info">2019年建成</div>
+        </div>
+        <div class="rj-button">
+          <p class="order-table">预约看房</p>
+          <p class="collection">收藏</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import ThumbCarousel from './ThumbCarousel'
+
 export default {
   name: 'Detail',
   data () {
     return {
+      dialogPaymentMethod: false,
+      paymentData: [{
+        paymentMethod: '月付',
+        rent: '￥8600',
+        serviceCharge: '￥8256',
+        cashPledge: '￥8600'
+      }, {
+        paymentMethod: '季付',
+        rent: '￥8600',
+        serviceCharge: '￥8256',
+        cashPledge: '￥8600'
+      }, {
+        paymentMethod: '半年付',
+        rent: '￥8600',
+        serviceCharge: '￥8256',
+        cashPledge: '￥8600'
+      }, {
+        paymentMethod: '年付',
+        rent: '￥8600',
+        serviceCharge: '￥8256',
+        cashPledge: '￥8600'
+      }]
     }
+  },
+  components: {
+    ThumbCarousel
   }
 }
 </script>
@@ -44,6 +152,121 @@ export default {
         font-weight: 400;
     }
     .room-info{
-      width: 50%;
+      margin-top: 25px;
     }
+      .room-carousel{
+        width: 60%;
+        display: inline-block;
+      }
+      .rj-info{
+        display: inline-block;
+        position: absolute;
+        margin-left: 5px;
+        width: 476px;
+      }
+        .rj-title h2{
+          display: inline-block;
+          margin: 10px auto 0;
+        }
+          .item-tag{
+              padding: 5px 6px;
+              height: 30px;
+              line-height: 16px;
+              font-size: 15px;
+              background-color: #ff961e;
+          }
+        .rj-price{
+          color: #ff961e;
+          font-size: 30px;
+          margin-top: 10px;
+        }
+        .price-rule{
+          color: rgba(0,0,0,.6);
+          font-size: 13px;
+          margin: 5px 0 0 3px;
+        }
+          .payment-method{
+            padding: 0;
+            color: rgba(0,0,0,.6);
+            text-decoration: underline;
+          }
+          .payment-method:hover{
+            color: #ff961e;
+          }
+          .dialog-title >>> .el-dialog__title{
+            font-weight: 600;
+            font-size: 30px;
+          }
+          .dialog-item >>> th > .cell{
+            font-size: 17px;
+          }
+          .instructions{
+            color: rgba(0,0,0,.4);
+          }
+        .rj-tags{
+          margin: 15px 0 15px;
+        }
+          .tag{
+            background: rgba(0,0,0,.03);
+            padding: 6px 10px;
+            font-size: 14px;
+            margin-right: 5px;
+            margin-bottom: 8px;
+            border-radius: 2px;
+            color: rgba(0,0,0,.6);
+            display: inline-block;
+          }
+        .rj-divider{
+          margin: 0;
+        }
+        .home-info{
+          padding: 5px;
+        }
+          .home-info-title{
+            color: rgba(0,0,0,.4);
+            margin: 6px 0 10px;
+          }
+          .home-info-data{
+            color: rgba(0,0,0,.85);
+            font-size: 20px;
+            margin: 6px 0;
+          }
+        .rj-home-info{
+          padding: 15px 5px;
+          font-size: 18px;
+        }
+          .rj-home-info .title{
+            color: rgba(0,0,0,.4);
+            display: inline-block;
+            margin-right: 2px;
+            min-width: 62px;
+          }
+          .rj-home-info .info{
+            display: inline-block;
+          }
+            .rj-home-info .info .area-item{
+              text-decoration: underline;
+            }
+        .rj-button{
+          text-align: center;
+          padding: 10px 20px;
+        }
+          .rj-button .order-table{
+            padding: 15px;
+            background-color: #ff961e;
+            font-size: 20px;
+            color: #fff;
+            width: 350px;
+            margin: 0 auto 5px;
+            cursor: pointer;
+          }
+          .rj-button .collection{
+            padding: 15px;
+            background-color: #06a9b3;
+            font-size: 20px;
+            color: #fff;
+            width: 350px;
+            margin: 0 auto;
+            cursor: pointer;
+          }
 </style>

@@ -7,7 +7,7 @@
             <el-breadcrumb-item><span class="rj-breadcrumb">丰台区租房</span></el-breadcrumb-item>
             <el-breadcrumb-item><span class="rj-breadcrumb">刘家窑租房</span></el-breadcrumb-item>
             <el-breadcrumb-item><span class="rj-breadcrumb">福臻家园租房</span></el-breadcrumb-item>
-            <el-breadcrumb-item><span class="rj-breadcrumb">刘家窑 福臻家园 次卧 朝东 A室 </span></el-breadcrumb-item>
+            <el-breadcrumb-item><span class="rj-breadcrumb">刘家窑 福臻家园 次卧 朝东 A室</span></el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="room-info">
@@ -18,7 +18,7 @@
       <div class="rj-info">
         <div class="rj-title">
           <el-tag class="item-tag" effect="dark" type="info">转</el-tag>
-          <h2>自如友家·三环新城7号院·3居室-02卧</h2>
+          <h2>刘家窑 福臻家园 次卧 朝东 A室</h2>
         </div>
         <div class="rj-price">
           ￥<span>8600</span>/月（季付价）

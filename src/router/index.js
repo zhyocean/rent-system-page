@@ -19,7 +19,7 @@ export default new Router({
       component: Rent
     },
     {
-      path: '/room',
+      path: '/room/:id',
       name: 'Room',
       component: Room
     }

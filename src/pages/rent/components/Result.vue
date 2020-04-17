@@ -17,13 +17,15 @@
       </div>
       <div class="pic-list">
         <div class="item">
-          <div class="item-title">
-            <img src="@/assets/home/service_pic1.jpg" alt="">
-          </div>
+          <router-link to="/room/110">
+            <div class="item-title">
+              <img src="@/assets/home/service_pic1.jpg" alt="">
+            </div>
+          </router-link>
           <div class="item-info">
             <h5 class="info-title">
               <el-tag class="item-tag" effect="dark" type="info">转</el-tag>
-              <a>整租·叠翠庭苑2室1厅-南北</a>
+              <router-link class="room-url" to="/room/110"><a>整租·叠翠庭苑2室1厅-南北</a></router-link>
             </h5>
             <div class="room-info">
               <div>
@@ -45,13 +47,15 @@
           </div>
         </div>
         <div class="item middle">
-          <div class="item-title">
-            <img src="@/assets/home/service_pic1.jpg" alt="">
-          </div>
+          <router-link to="/room/110">
+            <div class="item-title">
+              <img src="@/assets/home/service_pic1.jpg" alt="">
+            </div>
+          </router-link>
           <div class="item-info">
             <h5 class="info-title">
               <el-tag class="item-tag" effect="dark" type="info">转</el-tag>
-              <a>整租·叠翠庭苑2室1厅-南北</a>
+              <router-link class="room-url" to="/room/110"><a>整租·叠翠庭苑2室1厅-南北</a></router-link>
             </h5>
             <div class="room-info">
               <div>
@@ -73,13 +77,15 @@
           </div>
         </div>
         <div class="item">
-          <div class="item-title">
-            <img src="@/assets/home/service_pic1.jpg" alt="">
-          </div>
+          <router-link to="/room/110">
+            <div class="item-title">
+              <img src="@/assets/home/service_pic1.jpg" alt="">
+            </div>
+          </router-link>
           <div class="item-info">
             <h5 class="info-title">
               <el-tag class="item-tag" effect="dark" type="info">转</el-tag>
-              <a>整租·叠翠庭苑2室1厅-南北</a>
+              <router-link class="room-url" to="/room/110"><a>整租·叠翠庭苑2室1厅-南北</a></router-link>
             </h5>
             <div class="room-info">
               <div>
@@ -205,6 +211,12 @@ export default {
             line-height: 16px;
             transform: translateY(-3px);
           }
+            .room-url{
+              text-decoration: none;
+            }
+            .info-title a:hover{
+              color: #ff961e;
+            }
           .info-title{
             margin-bottom: 10px;
           }

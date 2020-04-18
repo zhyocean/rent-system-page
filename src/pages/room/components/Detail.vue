@@ -142,9 +142,9 @@ export default {
 
 <style scoped>
   .wrapper{
-      width: 1190px;
-      margin: 0 auto;
-      margin-top: 50px;
+    width: 1190px;
+    margin: 0 auto;
+    margin-top: 50px;
   }
     .rj-breadcrumb{
         font-size: 16px;

@@ -53,8 +53,8 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="centerDialogVisible = false">登 录</el-button>
-        <span class="swichAccontHook" v-if="loginMethod === 'account-login'" @click="swichAccontHook">手机验证码登录</span>
-        <span class="swichAccontHook" v-if="loginMethod === 'phone-login'" @click="swichAccontHook">账号密码登录</span>
+        <span class="swich-accont-hook" v-if="loginMethod === 'account-login'" @click="swichAccontHook">手机验证码登录</span>
+        <span class="swich-accont-hook" v-if="loginMethod === 'phone-login'" @click="swichAccontHook">账号密码登录</span>
       </span>
     </el-dialog>
     <!-- 注册模态框 -->
@@ -178,7 +178,7 @@ export default {
         color: #ff961e !important;
         text-decoration: underline;
       }
-    .swichAccontHook{
+    .swich-accont-hook{
       display: block;
       font-size: 17px;
       color: #ff961e;

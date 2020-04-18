@@ -1,13 +1,11 @@
 <template>
-  <div>
+  <div>1
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Rent',
-  components: {
-  },
+  name: 'Footer',
   data () {
     return {
     }
@@ -15,5 +13,5 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 </style>

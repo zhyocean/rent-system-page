@@ -53,7 +53,6 @@ export default {
         margin-top: 40px;
         background: #212121;
         padding-bottom: 100px;
-        bottom: 0;
     }
         .hidden{
             color: #212121;

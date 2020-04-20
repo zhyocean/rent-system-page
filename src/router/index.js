@@ -4,6 +4,7 @@ import Home from '@/pages/home/Home'
 import Rent from '@/pages/rent/Rent'
 import Room from '@/pages/room/Room'
 import User from '@/pages/user/User'
+import Space from '@/pages/space/Space'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/user',
       name: 'User',
       component: User
+    },
+    {
+      path: '/space',
+      name: 'Space',
+      component: Space
     }
   ],
   scrollBehavior (to, from, savedPosition) {

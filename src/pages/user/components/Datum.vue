@@ -18,67 +18,67 @@
       </el-col>
       <el-col :span="21" v-show="cardShow === 'personal-info'">
         <div class="main">
-            <div class="title">
-                <span>个人信息</span>
+          <div class="title">
+              <span>个人信息</span>
+          </div>
+          <div class="content">
+            <div class="item">
+              <div class="item-title head-portrait-title">头像</div>
+              <img src="https://image.ziroom.com/g2m3/M00/CD/94/ChAZVF6asm2AP4i6AAKy0xCDtGs316.jpg">
+              <div class="change-head-portrait">
+                <input class="head-portrait-input" type="file"/>
+                <el-button class="head-portrait-word" type="warning">更改头像</el-button>
+                <p>仅支持JPG、PNG格式，文件小于3M。</p>
+              </div>
             </div>
-            <div class="content">
-              <div class="item">
-                <div class="item-title head-portrait-title">头像</div>
-                <img src="https://image.ziroom.com/g2m3/M00/CD/94/ChAZVF6asm2AP4i6AAKy0xCDtGs316.jpg">
-                <div class="change-head-portrait">
-                  <input class="head-portrait-input" type="file"/>
-                  <el-button class="head-portrait-word" type="warning">更改头像</el-button>
-                  <p>仅支持JPG、PNG格式，文件小于3M。</p>
-                </div>
-              </div>
-              <el-divider class="item-line"></el-divider>
-              <div class="item">
-                <div class="item-title">昵称</div>
-                <input class="item-input" type="text" value="张海洋">
-              </div>
-              <div class="item">
-                <div class="item-title">手机号</div>
-                <div class="item-content">19940790216</div>
-                <span class="change-user-info" @click="changeInfo('change-phone')">修改</span>
-              </div>
-              <div class="item">
-                <div class="item-title">邮箱</div>
-                <div class="item-content">19940790216@163.com</div>
-                <span class="change-user-info" @click="changeInfo('change-email')">修改</span>
-              </div>
-              <div class="item">
-                <div class="item-title">密码</div>
-                <div class="item-content">**********</div>
-                <span class="change-user-info" @click="changeInfo('change-password')">修改</span>
-              </div>
-              <el-button class="save-button" type="warning">保存</el-button>
+            <el-divider class="item-line"></el-divider>
+            <div class="item">
+              <div class="item-title">昵称</div>
+              <input class="item-input" type="text" value="张海洋">
             </div>
+            <div class="item">
+              <div class="item-title">手机号</div>
+              <div class="item-content">19940790216</div>
+              <span class="change-user-info" @click="changeInfo('change-phone')">修改</span>
+            </div>
+            <div class="item">
+              <div class="item-title">邮箱</div>
+              <div class="item-content">19940790216@163.com</div>
+              <span class="change-user-info" @click="changeInfo('change-email')">修改</span>
+            </div>
+            <div class="item">
+              <div class="item-title">密码</div>
+              <div class="item-content">**********</div>
+              <span class="change-user-info" @click="changeInfo('change-password')">修改</span>
+            </div>
+            <el-button class="save-button" type="warning">保存</el-button>
+          </div>
         </div>
       </el-col>
       <el-col :span="21" v-show="cardShow === 'certificate-info'">
         <div class="main">
-            <div class="title">
-                <span>证件信息</span>
+          <div class="title">
+              <span>证件信息</span>
+          </div>
+          <div class="content" v-if="Object.keys(certInfo).length!=0">
+            <div class="item">
+              <div class="item-title">真实姓名</div>
+              <div class="item-content">{{certInfo.realName}}</div>
             </div>
-            <div class="content" v-if="Object.keys(certInfo).length!=0">
-              <div class="item">
-                <div class="item-title">真实姓名</div>
-                <div class="item-content">{{certInfo.realName}}</div>
-              </div>
-              <div class="item">
-                <div class="item-title">证件类型</div>
-                <div class="item-content">身份证</div>
-              </div>
-              <div class="item">
-                <div class="item-title">证件号码</div>
-                <div class="item-content">{{certInfo.iDNumber}}</div>
-              </div>
-              <el-button class="save-button" type="warning" @click="changeInfo('change-id-card')">修改证件信息</el-button>
+            <div class="item">
+              <div class="item-title">证件类型</div>
+              <div class="item-content">身份证</div>
             </div>
-            <div class="content" v-if="Object.keys(certInfo).length==0">
-              <div class="not-certificate">您未进行身份验证，请尽快进行验证！</div>
-              <el-button class="save-button" type="warning" @click="changeInfo('change-id-card')">进行身份验证</el-button>
+            <div class="item">
+              <div class="item-title">证件号码</div>
+              <div class="item-content">{{certInfo.iDNumber}}</div>
             </div>
+            <el-button class="save-button" type="warning" @click="changeInfo('change-id-card')">修改证件信息</el-button>
+          </div>
+          <div class="content" v-if="Object.keys(certInfo).length==0">
+            <div class="not-certificate">您未进行身份验证，请尽快进行验证！</div>
+            <el-button class="save-button" type="warning" @click="changeInfo('change-id-card')">进行身份验证</el-button>
+          </div>
         </div>
       </el-col>
       <step-info v-if="cardShow === 'change-info'"

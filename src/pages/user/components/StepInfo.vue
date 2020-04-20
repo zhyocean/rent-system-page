@@ -52,17 +52,34 @@
           <el-step title="完成"></el-step>
         </el-steps>
         <div class="form-info">
-          <div class="form-item">
-            <span class="form-title">邮箱</span>
-            <span class="form-content">{{userInfo.emailNum}}</span>
+          <div v-if="formStep === 1">
+            <div class="form-item">
+              <span class="form-title">邮箱</span>
+              <span class="form-content">{{userInfo.emailNum}}</span>
+            </div>
+            <div class="form-item">
+              <span class="form-title">邮箱验证码</span>
+              <input type="text" class="form-input" placeholder="输入邮箱验证码">
+              <el-button class="get-code-button" type="warning">获取验证码</el-button>
+            </div>
+            <el-button class="next-button" type="warning" @click="next">下一步</el-button>
           </div>
-          <div class="form-item">
-            <span class="form-title">邮箱验证码</span>
-            <input type="text" class="form-input" placeholder="输入邮箱验证码">
-            <el-button class="get-code-button" type="warning">获取验证码</el-button>
+          <div v-if="formStep === 2">
+            <div class="form-item">
+              <span class="form-title">新邮箱</span>
+              <input type="text" class="form-input" placeholder="输入新的邮箱">
+            </div>
+            <div class="form-item">
+              <span class="form-title">邮箱验证码</span>
+              <input type="text" class="form-input" placeholder="输入邮箱验证码">
+              <el-button class="get-code-button" type="warning">获取验证码</el-button>
+            </div>
+            <el-button class="next-button" type="warning" @click="next">下一步</el-button>
+          </div>
+          <div v-if="formStep === 3" class="change-success">
+            <i class="iconfont change-success-icon">&#xe671;</i>邮箱修改完成！3秒后自动跳转到个人中心
           </div>
         </div>
-        <el-button class="next-button" type="warning" @click="next">下一步</el-button>
       </div>
     </div>
     <div class="main" v-if="content === 'change-password'">
@@ -76,21 +93,37 @@
           <el-step title="完成"></el-step>
         </el-steps>
         <div class="form-info">
+          <div v-if="formStep === 1">
             <div class="form-item">
-            <span class="form-title">验证方式</span>
-            <span class="form-content">手机号验证</span>
+              <span class="form-title">验证方式</span>
+              <span class="form-content">手机号验证</span>
+            </div>
+            <div class="form-item">
+              <span class="form-title">手机号</span>
+              <span class="form-content">{{userInfo.phoneNum}}</span>
+            </div>
+            <div class="form-item">
+              <span class="form-title">手机验证码</span>
+              <input type="text" class="form-input" placeholder="输入手机验证码">
+              <el-button class="get-code-button" type="warning">获取验证码</el-button>
+            </div>
+            <el-button class="next-button" type="warning" @click="next">下一步</el-button>
           </div>
-          <div class="form-item">
-            <span class="form-title">手机号</span>
-            <span class="form-content">{{userInfo.phoneNum}}</span>
+          <div v-if="formStep === 2">
+            <div class="form-item">
+              <span class="form-title">设置密码</span>
+              <input type="password" class="form-input" placeholder="设置您的登陆密码">
+            </div>
+            <div class="form-item">
+              <span class="form-title">验证密码</span>
+              <input type="password" class="form-input" placeholder="再次输入您的登陆密码">
+            </div>
+            <el-button class="next-button" type="warning" @click="next">下一步</el-button>
           </div>
-          <div class="form-item">
-            <span class="form-title">手机验证码</span>
-            <input type="text" class="form-input" placeholder="输入手机验证码">
-            <el-button class="get-code-button" type="warning">获取验证码</el-button>
+          <div v-if="formStep === 3" class="change-success">
+            <i class="iconfont change-success-icon">&#xe671;</i>密码修改完成！3秒后自动跳转到个人中心
           </div>
         </div>
-        <el-button class="next-button" type="warning" @click="next">下一步</el-button>
       </div>
     </div>
     <div class="main" v-if="content === 'change-id-card'">
@@ -104,21 +137,37 @@
           <el-step title="完成"></el-step>
         </el-steps>
         <div class="form-info">
+          <div v-if="formStep === 1">
             <div class="form-item">
-            <span class="form-title">验证方式</span>
-            <span class="form-content">手机号验证</span>
+              <span class="form-title">验证方式</span>
+              <span class="form-content">手机号验证</span>
+            </div>
+            <div class="form-item">
+              <span class="form-title">手机号</span>
+              <span class="form-content">{{userInfo.phoneNum}}</span>
+            </div>
+            <div class="form-item">
+              <span class="form-title">手机验证码</span>
+              <input type="text" class="form-input" placeholder="输入手机验证码">
+              <el-button class="get-code-button" type="warning">获取验证码</el-button>
+            </div>
+            <el-button class="next-button" type="warning" @click="next">下一步</el-button>
           </div>
-          <div class="form-item">
-            <span class="form-title">手机号</span>
-            <span class="form-content">{{userInfo.phoneNum}}</span>
+          <div v-if="formStep === 2">
+            <div class="form-item">
+              <span class="form-title">真实姓名</span>
+              <input type="password" class="form-input" placeholder="输入您的真实姓名">
+            </div>
+            <div class="form-item">
+              <span class="form-title">证件号码</span>
+              <input type="password" class="form-input" placeholder="输入您的证件号码">
+            </div>
+            <el-button class="next-button" type="warning" @click="next">下一步</el-button>
           </div>
-          <div class="form-item">
-            <span class="form-title">手机验证码</span>
-            <input type="text" class="form-input" placeholder="输入手机验证码">
-            <el-button class="get-code-button" type="warning">获取验证码</el-button>
+          <div v-if="formStep === 3" class="change-success">
+            <i class="iconfont change-success-icon">&#xe671;</i>密码修改完成！3秒后自动跳转到个人中心
           </div>
         </div>
-        <el-button class="next-button" type="warning" @click="next">下一步</el-button>
       </div>
     </div>
   </el-col>
@@ -144,6 +193,11 @@ export default {
         this.active = 3
       }
       this.formStep++
+      if (this.active === 3) {
+        setTimeout(() => {
+          this.$router.go(0)
+        }, 3000)
+      }
     }
   }
 }
@@ -182,7 +236,7 @@ export default {
               color: #999;
             }
             .form-input{
-              width: 100px;
+              width: 150px;
               border: solid 1px #ccc;
               padding: 0 10px;
               height: 40px;

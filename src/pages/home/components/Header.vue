@@ -120,6 +120,7 @@ export default {
   .header-row{
     border-bottom: solid 1px #e6e6e6;
     position: relative;
+    width: 100%;
   }
     .header_logo{
       height: 60px;

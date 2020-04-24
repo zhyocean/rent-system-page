@@ -165,7 +165,7 @@
             <el-button class="next-button" type="warning" @click="next">下一步</el-button>
           </div>
           <div v-if="formStep === 3" class="change-success">
-            <i class="iconfont change-success-icon">&#xe671;</i>密码修改完成！3秒后自动跳转到个人中心
+            <i class="iconfont change-success-icon">&#xe671;</i>证件信息修改完成！3秒后自动跳转到个人中心
           </div>
         </div>
       </div>

@@ -95,9 +95,29 @@
           <div class="info">2019年建成</div>
         </div>
         <div class="rj-button">
-          <p class="order-table">预约看房</p>
+          <p class="order-table" @click="dialogOrderTable = true">预约看房</p>
           <p class="collection">收藏</p>
         </div>
+        <el-dialog class="dialog-order-table" title="咨询约看" :visible.sync="dialogOrderTable" width="23%">
+          <div class="order-table-info">
+            <img src="http://pic.ziroom.com/steward_images/60019508.png">
+            <div class="dialog-content">
+              <h3>张海洋 <i class="iconfont">&#xe654;</i></h3>
+              <span>提交约看后我会尽快联系您确认时间和地点</span>
+            </div>
+          </div>
+          <div class="order-table-dialog">
+            <el-date-picker v-model="orderTime" type="date" placeholder="选择日期"></el-date-picker>
+          </div>
+          <div class="order-table-dialog">
+            <i class="iconfont">&#xe6f4;</i>
+            <input type="text" class="order-table-input" placeholder="请输入您的手机" :value="orderPhone">
+          </div>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogOrderTable = false">取 消</el-button>
+            <el-button type="primary" @click="dialogOrderTable = false">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
     </div>
   </div>
@@ -111,6 +131,9 @@ export default {
   data () {
     return {
       dialogPaymentMethod: false,
+      dialogOrderTable: false,
+      orderTime: '2020-04-06',
+      orderPhone: '19940790216',
       paymentData: [{
         paymentMethod: '月付',
         rent: '￥8600',
@@ -136,6 +159,11 @@ export default {
   },
   components: {
     ThumbCarousel
+  },
+  mehods: {
+    orderTableClick () {
+
+    }
   }
 }
 </script>
@@ -269,4 +297,55 @@ export default {
             margin: 0 auto;
             cursor: pointer;
           }
+        .order-table-info{
+          margin-bottom: 20px;
+        }
+          .order-table-info img{
+            width: 60px;
+            display: inline-block;
+          }
+          .order-table-info .dialog-content{
+            display: inline-block;
+            transform: translateY(-15px);
+          }
+            .dialog-content .iconfont{
+              font-size: 25px;
+              color: #999;
+            }
+        .dialog-order-table >>> .el-dialog__title{
+          font-size: 25px;
+          font-weight: 500;
+        }
+        .dialog-order-table >>> .el-dialog__body{
+          padding: 0 20px;
+        }
+          .order-table-dialog{
+            position: relative;
+            margin-bottom: 10px;
+          }
+            .order-table-dialog >>> .el-date-editor.el-input, .el-date-editor.el-input__inner{
+              width: 100%;
+            }
+            .order-table-dialog .iconfont{
+              position: absolute;
+              top: 12px;
+              left: 10px;
+              color: #999;
+            }
+            .order-table-input{
+              background-color: #FFF;
+              background-image: none;
+              border-radius: 4px;
+              border: 1px solid #DCDFE6;
+              box-sizing: border-box;
+              color: #606266;
+              display: inline-block;
+              font-size: inherit;
+              height: 40px;
+              line-height: 40px;
+              outline: 0;
+              padding: 0 32px;
+              transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+              width: 100%;
+            }
 </style>

@@ -7,9 +7,13 @@
       <div v-if="cardItems.length > 0">
         <div class="content">
           <el-card class="card" :body-style="{ padding: '0px' }" v-for="(item, index) of cardItems" :key="index">
-            <img :src="item.roomImg" class="card-img">
+            <router-link to="/room/110">
+              <img :src="item.roomImg" class="card-img">
+            </router-link>
             <div class="card-content">
-              <span class="card-title">{{item.roomTitle}}</span>
+              <router-link to="/room/110" class="card-router">
+                <span class="card-title">{{item.roomTitle}}</span>
+              </router-link>
               <div class="bottom clearfix">
               <time class="describe">
                 <span class="room-area">{{item.roomArea}}</span> | <span class="room-floor">{{item.roomFloor}}</span> | <span class="room-rent">{{item.roomRent}}</span></time>
@@ -47,7 +51,7 @@ export default {
         roomTitle: '整租·叠翠庭苑2室1厅-南北',
         roomArea: '86㎡',
         roomFloor: '1/28层',
-        roomRent: '￥8600'
+        roomRent: '￥1600'
       }
       ]
     }
@@ -55,9 +59,9 @@ export default {
   methods: {
     deleteButton (e) {
       var cardId = parseInt(e.currentTarget.id)
-      for (var item of this.cardItems) {
-        if (item.roomId === cardId) {
-          this.cardItems.splice(item, 1)
+      for (var i = 0; i < this.cardItems.length; i++) {
+        if (this.cardItems[i].roomId === cardId) {
+          this.cardItems.splice(i, 1)
         }
       }
     }
@@ -74,14 +78,19 @@ export default {
     .card-img {
       width: 100%;
       display: block;
+      cursor: pointer;
     }
     .card-content{
       padding: 14px;
     }
-    .card-title{
-      font-size: 14px;
-      color: #ff961e;
+    .card-router{
+      text-decoration: none;
     }
+      .card-title{
+        font-size: 14px;
+        color: #ff961e;
+        cursor: pointer;
+      }
     .describe {
       font-size: 13px;
       color: #999;

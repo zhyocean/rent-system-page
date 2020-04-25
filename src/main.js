@@ -9,10 +9,12 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './assets/icon/iconfont.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
+import echarts from 'echarts'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueAwesomeSwiper)
+Vue.prototype.$echarts = echarts
 
 /* eslint-disable no-new */
 new Vue({

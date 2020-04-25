@@ -12,7 +12,10 @@
             </div>
             <div class="contract-item">
               <span>租金：</span><span class="item-span rent">{{item.rent}}元/月</span>
-              <span>付款方式：</span><span class="item-span">{{item.paymentMethod}}</span>
+              <span>付款方式：</span><span class="item-span rent">{{item.paymentMethod}}</span>
+              <el-tag type="info" effect="dark" v-if="item.contractState === 0">已过期</el-tag>
+              <el-tag type="warning" effect="dark" v-else>签约中</el-tag>
+              <span></span>
             </div>
             <template>
               <el-table class="contract-order" :data="item.orderData" style="width: 80%">
@@ -31,9 +34,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column fixed="right" label="支付操作" width="100">
-                  <template slot-scope="scope">
-                    <el-button size="mini" type="warning" @click="handlePayClick(scope.$index, scope.row)">支付订单</el-button>
-                  </template>
+                  <el-button size="mini" type="warning" @click="handlePayClick(scope.$index, scope.row)">支付订单</el-button>
                 </el-table-column>
               </el-table>
             </template>
@@ -56,25 +57,28 @@ export default {
           contractNum: 86943159751,
           rent: '8600',
           paymentMethod: '季付',
+          contractState: 0,
           orderData: [{
             serialNumber: '19863514896',
             consumeDate: '2019-06-08',
             consumeProject: '水费',
             consumeMoney: '201元',
             paymentState: '未支付'
-          }, {
-            serialNumber: '19863514896',
-            consumeDate: '2019-06-08',
-            consumeProject: '水费',
-            consumeMoney: '201元',
-            paymentState: '已支付'
           }]
         }, {
           title: '合同1(深圳) -- 刘家窑 福臻家园 次卧 朝东 A室',
           contractNum: 86943159751,
           rent: '8600',
           paymentMethod: '季付',
+          contractState: 1,
           orderData: [{
+            serialNumber: '19863514896',
+            consumeDate: '2019-06-08',
+            consumeProject: '水费',
+            consumeMoney: '201元',
+            paymentState: '已支付'
+          },
+          {
             serialNumber: '19863514896',
             consumeDate: '2019-06-08',
             consumeProject: '水费',

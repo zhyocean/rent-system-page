@@ -100,9 +100,9 @@
         </div>
         <el-dialog class="dialog-order-table" title="咨询约看" :visible.sync="dialogOrderTable" width="23%">
           <div class="order-table-info">
-            <img src="http://pic.ziroom.com/steward_images/60019508.png">
+            <img :src="stewardPic">
             <div class="dialog-content">
-              <h3>张海洋 <i class="iconfont">&#xe654;</i></h3>
+              <h3>{{stewardName}} <i class="iconfont">&#xe654;</i></h3>
               <span>提交约看后我会尽快联系您确认时间和地点</span>
             </div>
           </div>
@@ -134,6 +134,8 @@ export default {
       dialogOrderTable: false,
       orderTime: '2020-04-06',
       orderPhone: '19940790216',
+      stewardName: '秦芮',
+      stewardPic: 'http://pic.ziroom.com/steward_images/60019508.png',
       paymentData: [{
         paymentMethod: '月付',
         rent: '￥8600',

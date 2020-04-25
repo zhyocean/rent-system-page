@@ -7,22 +7,32 @@
           </div>
           <el-menu default-active="1" class="el-menu-vertical-demo navigation">
             <el-menu-item index="1" @click="myCollection">
-              <i class="iconfont">&#xe60a;</i>
+              <i class="iconfont">&#xe77f;</i>
               <span slot="title">我的收藏</span>
             </el-menu-item>
             <el-menu-item index="2" @click="myOrder">
-              <i class="iconfont">&#xe76d;</i>
+              <i class="iconfont">&#xe705;</i>
               <span slot="title">我的预约</span>
             </el-menu-item>
             <el-menu-item index="3" @click="myContract">
-              <i class="iconfont">&#xe76d;</i>
+              <i class="iconfont">&#xe66e;</i>
               <span slot="title">我的合同</span>
+            </el-menu-item>
+            <el-menu-item index="4" @click="myHome">
+              <i class="iconfont">&#xe66f;</i>
+              <span slot="title">我的小屋</span>
+            </el-menu-item>
+            <el-menu-item index="5" @click="equipmentRepair">
+              <i class="iconfont">&#xe66f;</i>
+              <span slot="title">设备报修</span>
             </el-menu-item>
           </el-menu>
         </el-col>
         <space-collect v-if="cardShow === 'my-collection'"></space-collect>
         <space-Order v-if="cardShow === 'my-order'"></space-Order>
         <space-contract v-if="cardShow === 'my-contract'"></space-contract>
+        <space-home v-if="cardShow === 'my-home'"></space-home>
+        <space-equipment-repair v-if="cardShow === 'equipment-repair'"></space-equipment-repair>
     </el-row>
   </div>
 </template>
@@ -30,9 +40,11 @@
 import SpaceCollect from './Collect'
 import SpaceOrder from './Order'
 import SpaceContract from './Contract'
+import SpaceHome from './Home'
+import SpaceEquipmentRepair from './EquipmentRepair'
 
 export default {
-  name: 'Subject',
+  name: 'Card',
   data () {
     return {
       cardShow: 'my-collection'
@@ -41,7 +53,9 @@ export default {
   components: {
     SpaceCollect,
     SpaceOrder,
-    SpaceContract
+    SpaceContract,
+    SpaceHome,
+    SpaceEquipmentRepair
   },
   methods: {
     myCollection () {
@@ -52,6 +66,12 @@ export default {
     },
     myContract () {
       this.cardShow = 'my-contract'
+    },
+    myHome () {
+      this.cardShow = 'my-home'
+    },
+    equipmentRepair () {
+      this.cardShow = 'equipment-repair'
     }
   }
 }
@@ -87,7 +107,7 @@ export default {
     .main{
       margin-left: 20px;
       border: solid 1px #eee;
-      min-height: 500px;
+      min-height: 550px;
     }
       .main .title{
         background: #fafafa;

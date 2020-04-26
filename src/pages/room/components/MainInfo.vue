@@ -42,7 +42,6 @@
                   <div class="pack-up" @click="packUpAllocation" v-if="!showMore">收起</div>
               </div>
           </div>
-          <div>fdgdgdfg</div>
           <div class="chum-info">
               <h2>室友信息</h2>
               <table>

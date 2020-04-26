@@ -22,9 +22,13 @@
               <i class="iconfont">&#xe66f;</i>
               <span slot="title">我的小屋</span>
             </el-menu-item>
-            <el-menu-item index="5" @click="equipmentRepair">
-              <i class="iconfont">&#xe66f;</i>
-              <span slot="title">设备报修</span>
+            <el-menu-item index="5" @click="myEquipment">
+              <i class="iconfont">&#xe60b;</i>
+              <span slot="title">我的设施</span>
+            </el-menu-item>
+            <el-menu-item index="6" @click="Iandlord">
+              <i class="iconfont">&#xe61d;</i>
+              <span slot="title">发布房源</span>
             </el-menu-item>
           </el-menu>
         </el-col>
@@ -32,7 +36,8 @@
         <space-Order v-if="cardShow === 'my-order'"></space-Order>
         <space-contract v-if="cardShow === 'my-contract'"></space-contract>
         <space-home v-if="cardShow === 'my-home'"></space-home>
-        <space-equipment-repair v-if="cardShow === 'equipment-repair'"></space-equipment-repair>
+        <space-equipment v-if="cardShow === 'my-equipment'"></space-equipment>
+        <space-iandlord v-if="cardShow === 'iandlord'"></space-iandlord>
     </el-row>
   </div>
 </template>
@@ -41,7 +46,8 @@ import SpaceCollect from './Collect'
 import SpaceOrder from './Order'
 import SpaceContract from './Contract'
 import SpaceHome from './Home'
-import SpaceEquipmentRepair from './EquipmentRepair'
+import SpaceEquipment from './Equipment'
+import SpaceIandlord from './Iandlord'
 
 export default {
   name: 'Card',
@@ -55,7 +61,8 @@ export default {
     SpaceOrder,
     SpaceContract,
     SpaceHome,
-    SpaceEquipmentRepair
+    SpaceEquipment,
+    SpaceIandlord
   },
   methods: {
     myCollection () {
@@ -70,8 +77,11 @@ export default {
     myHome () {
       this.cardShow = 'my-home'
     },
-    equipmentRepair () {
-      this.cardShow = 'equipment-repair'
+    myEquipment () {
+      this.cardShow = 'my-equipment'
+    },
+    Iandlord () {
+      this.cardShow = 'iandlord'
     }
   }
 }

@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     getSearchInfo () {
-      axios.get('/api/search.json')
+      axios.get('/local/search.json')
         .then(this.handleGetSearchInfo)
     },
     handleGetSearchInfo (res) {

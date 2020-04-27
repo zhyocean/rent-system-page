@@ -12,6 +12,7 @@ import HomeHeader from './components/Header'
 import HomeCarousel from './components/Carousel'
 import HomeService from './components/Service'
 import HomeFooter from './components/Footer'
+import axios from 'axios'
 
 export default {
   name: 'Home',
@@ -20,6 +21,22 @@ export default {
     HomeCarousel,
     HomeService,
     HomeFooter
+  },
+  methods: {
+    getUserLoginInfo () {
+      axios.get('/api/getUserLoginInfo')
+        .then(this.handleUserLoginInfo)
+    },
+    handleUserLoginInfo (res) {
+      if (res.data.status === 109) {
+        this.$store.commit('verifiedAccount', '')
+      } else if (res.data.status === 0) {
+        this.$store.commit('verifiedAccount', res.data.data)
+      }
+    }
+  },
+  mounted () {
+    this.getUserLoginInfo()
   }
 }
 </script>

@@ -87,7 +87,6 @@
 
 <script>
 import axios from 'axios'
-// import vns from 'vue-number-scroll'
 
 export default {
   name: 'HomeHeader',
@@ -306,7 +305,11 @@ export default {
           countTime -= 1
           this.timeCount(idInfo, countTime)
         } else {
-          this.logAuthCodeBtn = false
+          if (idInfo === 'login-auth-code-btn') {
+            this.logAuthCodeBtn = false
+          } else {
+            this.regAuthCodeBtn = false
+          }
           document.getElementById(idInfo).innerText = '获得验证码'
         }
       }, 1000)

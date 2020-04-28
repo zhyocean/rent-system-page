@@ -1,7 +1,7 @@
 <template>
   <div>
     <user-header></user-header>
-    <user-datum></user-datum>
+    <user-datum :userInfo='userInfo' :certInfo="certInfo"></user-datum>
     <home-footer></home-footer>
   </div>
 </template>
@@ -10,6 +10,7 @@
 import UserHeader from './components/Header'
 import UserDatum from './components/Datum'
 import HomeFooter from '../home/components/Footer'
+import axios from 'axios'
 
 export default {
   name: 'User',
@@ -20,7 +21,47 @@ export default {
   },
   data () {
     return {
+      userInfo: {
+        phone: '',
+        username: '',
+        email: '',
+        headPortrait: ''
+      },
+      certInfo: {
+        realName: '',
+        idNumber: ''
+      }
     }
+  },
+  methods: {
+    getUserInfo () {
+      axios({
+        url: '/api/getUserInfo',
+        data: {
+        },
+        method: 'post',
+        header: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => {
+          if (res.data.status === 109) {
+            this.$router.push('/')
+            this.$message.error('您尚未登录！')
+          } else if (res.data.status === 0) {
+            var data = res.data.data
+            this.userInfo.phone = data.phone
+            this.userInfo.username = data.username
+            this.userInfo.email = data.email
+            this.userInfo.headPortrait = data.headPortrait
+            this.certInfo.realName = data.realName
+            this.certInfo.idNumber = data.idNumber
+          }
+        })
+    }
+  },
+  mounted () {
+    this.getUserInfo()
   }
 }
 </script>

@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="3" class="card">
         <div class="head-portrait">
-          <img src="https://image.ziroom.com/g2m3/M00/CD/94/ChAZVF6asm2AP4i6AAKy0xCDtGs316.jpg">
+          <img :src="userInfo.headPortrait">
         </div>
         <el-menu default-active="1" class="el-menu-vertical-demo navigation">
           <el-menu-item index="1" @click="personalInfo">
@@ -24,10 +24,10 @@
           <div class="content">
             <div class="item">
               <div class="item-title head-portrait-title">头像</div>
-              <img src="https://image.ziroom.com/g2m3/M00/CD/94/ChAZVF6asm2AP4i6AAKy0xCDtGs316.jpg">
+              <img :src="userInfo.headPortrait">
               <div class="change-head-portrait">
-                <input id="head-portrait" class="head-portrait-input" type="file"/>
-                <el-button @click="updateHeadPortrait" class="head-portrait-word" type="warning">更改头像</el-button>
+                <input @input="updateHeadPortrait" id="head-portrait" class="head-portrait-input" type="file"/>
+                <el-button class="head-portrait-word" type="warning">更改头像</el-button>
                 <p>仅支持JPG、PNG格式，文件小于3M。</p>
               </div>
             </div>
@@ -102,7 +102,8 @@ export default {
   data () {
     return {
       cardShow: 'personal-info',
-      changeContent: ''
+      changeContent: '',
+      headPortraitImg: ''
     }
   },
   components: {
@@ -128,7 +129,13 @@ export default {
       }
       axios.post('/api/updateHeadPortrait', param, config)
         .then(res => {
-          console.log(res.data)
+          if (res.data.status === 0) {
+            this.$message({
+              message: '更新头像成功',
+              type: 'success'
+            })
+            this.userInfo.headPortrait = res.data.data
+          }
         })
     },
     saveUserInfoBtn () {

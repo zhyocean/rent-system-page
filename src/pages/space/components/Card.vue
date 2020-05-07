@@ -26,7 +26,7 @@
               <i class="iconfont">&#xe60b;</i>
               <span slot="title">我的设施</span>
             </el-menu-item>
-            <el-menu-item index="6" @click="Iandlord">
+            <el-menu-item index="6" @click="iandlord">
               <i class="iconfont">&#xe61d;</i>
               <span slot="title">发布房源</span>
             </el-menu-item>
@@ -37,7 +37,10 @@
         <space-contract v-if="cardShow === 'my-contract'"></space-contract>
         <space-home v-if="cardShow === 'my-home'"></space-home>
         <space-equipment v-if="cardShow === 'my-equipment'"></space-equipment>
-        <space-iandlord v-if="cardShow === 'iandlord'"></space-iandlord>
+        <space-landlord v-if="cardShow === 'iandlord'"
+        :phone="userInfo.phone"
+        :landlords="landlords"
+        :houseResourceInfos="houseResources"></space-landlord>
     </el-row>
   </div>
 </template>
@@ -47,13 +50,19 @@ import SpaceOrder from './Order'
 import SpaceContract from './Contract'
 import SpaceHome from './Home'
 import SpaceEquipment from './Equipment'
-import SpaceIandlord from './Iandlord'
+import SpaceLandlord from './Landlord'
+import axios from 'axios'
 
 export default {
   name: 'Card',
+  props: {
+    userInfo: Object,
+    landlords: Array
+  },
   data () {
     return {
-      cardShow: 'my-collection'
+      cardShow: 'my-collection',
+      houseResources: []
     }
   },
   components: {
@@ -62,7 +71,7 @@ export default {
     SpaceContract,
     SpaceHome,
     SpaceEquipment,
-    SpaceIandlord
+    SpaceLandlord
   },
   methods: {
     myCollection () {
@@ -80,8 +89,27 @@ export default {
     myEquipment () {
       this.cardShow = 'my-equipment'
     },
-    Iandlord () {
+    iandlord () {
       this.cardShow = 'iandlord'
+      if (this.landlords.length > 0) {
+        axios({
+          url: '/api/getHouseResourceInfo',
+          data: {
+          },
+          method: 'post',
+          header: {
+            'Content-Type': 'application/json'
+          }
+        }).then(res => {
+          if (res.data.status === 109) {
+            this.$router.push('/')
+            this.$message.error('您尚未登录！')
+          } else if (res.data.status === 0) {
+            var data = res.data
+            this.houseResources = data.data
+          }
+        })
+      }
     }
   }
 }

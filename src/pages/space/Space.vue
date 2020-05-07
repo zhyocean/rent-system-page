@@ -1,7 +1,8 @@
 <template>
   <div>
     <user-header></user-header>
-    <space-card></space-card>
+    <space-card :userInfo="userInfo"
+    :landlords="landlords"></space-card>
     <home-footer></home-footer>
   </div>
 </template>
@@ -22,10 +23,15 @@ export default {
   },
   data () {
     return {
+      landlords: [],
+      userInfo: {
+        phone: '',
+        headPortrait: ''
+      }
     }
   },
   methods: {
-    getCollectInfo () {
+    getUserInfo () {
       axios({
         url: '/api/getUserInfo',
         data: {
@@ -40,12 +46,33 @@ export default {
             this.$router.push('/')
             this.$message.error('您尚未登录！')
           } else if (res.data.status === 0) {
+            var data = res.data.data
+            this.userInfo.phone = data.phone
+            this.userInfo.headPortrait = data.headPortrait
+          }
+        })
+    },
+    getSpaceInfo () {
+      axios({
+        url: '/api/getSpaceInfo',
+        data: {
+        },
+        method: 'post',
+        header: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => {
+          if (res.data.status === 0) {
+            var data = res.data.data
+            this.landlords = data.landlords
           }
         })
     }
   },
   mounted () {
-    this.getCollectInfo()
+    this.getUserInfo()
+    this.getSpaceInfo()
   }
 }
 </script>

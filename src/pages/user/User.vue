@@ -25,7 +25,8 @@ export default {
         phone: '',
         username: '',
         email: '',
-        headPortrait: ''
+        headPortrait: '',
+        gender: ''
       },
       certInfo: {
         realName: '',
@@ -53,6 +54,11 @@ export default {
             this.userInfo.phone = data.phone
             this.userInfo.username = data.username
             this.userInfo.email = data.email
+            if (data.gender === 1) {
+              this.userInfo.gender = '1'
+            } else {
+              this.userInfo.gender = '2'
+            }
             this.userInfo.headPortrait = data.headPortrait
             this.certInfo.realName = data.realName
             this.certInfo.idNumber = data.idNumber

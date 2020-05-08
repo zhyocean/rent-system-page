@@ -4,24 +4,22 @@
       <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/' }"><span class="rj-breadcrumb">如家公寓</span></el-breadcrumb-item>
             <el-breadcrumb-item :to="{ path: '/rent' }"><span class="rj-breadcrumb">{{this.$store.state.city}}租房</span></el-breadcrumb-item>
-            <el-breadcrumb-item><span class="rj-breadcrumb">丰台区租房</span></el-breadcrumb-item>
-            <el-breadcrumb-item><span class="rj-breadcrumb">刘家窑租房</span></el-breadcrumb-item>
-            <el-breadcrumb-item><span class="rj-breadcrumb">福臻家园租房</span></el-breadcrumb-item>
-            <el-breadcrumb-item><span class="rj-breadcrumb">刘家窑 福臻家园 次卧 朝东 A室</span></el-breadcrumb-item>
+            <el-breadcrumb-item v-for="(item, index) of roomInfo.areaTag" :key="index"><span class="rj-breadcrumb">{{item}}租房</span></el-breadcrumb-item>
+            <el-breadcrumb-item><span class="rj-breadcrumb">{{roomInfo.roomTitle}}</span></el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="room-info">
       <!-- 房屋介绍轮播图 -->
       <div class="room-carousel">
-        <thumb-carousel></thumb-carousel>
+        <thumb-carousel :roomPic="roomInfo.roomPic"></thumb-carousel>
       </div>
       <div class="rj-info">
         <div class="rj-title">
-          <el-tag class="item-tag" effect="dark" type="info">转</el-tag>
-          <h2>刘家窑 福臻家园 次卧 朝东 A室</h2>
+          <el-tag class="item-tag" effect="dark" type="info">签</el-tag>
+          <h2>{{roomInfo.roomTitle}}</h2>
         </div>
         <div class="rj-price">
-          ￥<span>8600</span>/月（季付价）
+          ￥<span>{{roomInfo.rent}}</span>/月（季付价）
         </div>
         <p class="price-rule">
           服务费另计，详情见
@@ -54,45 +52,43 @@
         <el-row class="home-info" :gutter="20">
           <el-col :span="6">
             <p class="home-info-title">建筑面积</p>
-            <p class="home-info-data">86㎡</p>
+            <p class="home-info-data">{{roomInfo.buildArea}}㎡</p>
           </el-col>
           <el-col :span="6">
             <p class="home-info-title">朝向</p>
-            <p class="home-info-data">朝南北</p>
+            <p class="home-info-data">朝{{roomInfo.toward}}</p>
             </el-col>
           <el-col :span="6">
             <p class="home-info-title">户型</p>
-            <p class="home-info-data">2室1厅</p>
+            <p class="home-info-data">{{roomInfo.doorModel}}</p>
           </el-col>
         </el-row>
         <el-divider class="rj-divider"></el-divider>
         <div class="rj-home-info">
           <span class="title">位置</span>
-          <span class="info">小区距郭庄子站步行约358米</span>
+          <span class="info">{{roomInfo.location}}</span>
         </div>
         <el-divider class="rj-divider"></el-divider>
         <div class="rj-home-info">
           <div class="title">楼层</div>
-          <div class="info">1/28</div>
+          <div class="info">{{roomInfo.floor}}</div>
         </div>
         <el-divider class="rj-divider"></el-divider>
         <div class="rj-home-info">
           <div class="title">电梯</div>
-          <div class="info">无</div>
+          <div class="info">{{roomInfo.lift}}</div>
         </div>
         <el-divider class="rj-divider"></el-divider>
         <div class="rj-home-info">
           <div class="title">区域</div>
-          <div class="info">
-            <span class="area-item">丰台区</span>
-            <span class="area-item">刘家窑</span>
-            <span class="area-item">福臻家园</span>
+          <div class="info" v-for="(item,index) of roomInfo.areaTag" :key="index">
+            <span class="area-item">{{item}}</span>
           </div>
         </div>
         <el-divider class="rj-divider"></el-divider>
         <div class="rj-home-info">
           <div class="title">年代</div>
-          <div class="info">2019年建成</div>
+          <div class="info">{{roomInfo.era}}年建成</div>
         </div>
         <div class="rj-button">
           <p class="order-table" @click="dialogOrderTable = true">预约看房</p>
@@ -128,6 +124,9 @@ import ThumbCarousel from './ThumbCarousel'
 
 export default {
   name: 'Detail',
+  props: {
+    roomInfo: Object
+  },
   data () {
     return {
       dialogPaymentMethod: false,
@@ -276,6 +275,7 @@ export default {
           }
             .rj-home-info .info .area-item{
               text-decoration: underline;
+              margin-right: 5px;
             }
         .rj-button{
           text-align: center;

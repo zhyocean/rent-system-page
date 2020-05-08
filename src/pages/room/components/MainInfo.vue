@@ -38,7 +38,7 @@
                     <div class="iconfont" v-html="item.allocationUnicode"></div>
                     <span>{{item.allocationWord}}</span>
                   </div>
-                  <div class="show-more" @click="showMoreAllocation" v-if="showMore">更多</div>
+                  <div class="show-more" @click="showMoreAllocation" v-if="showMore && allocationInfo.length > 6">更多</div>
                   <div class="pack-up" @click="packUpAllocation" v-if="!showMore">收起</div>
               </div>
           </div>
@@ -62,27 +62,27 @@
                   <!-- 房间 -->
                   <td>{{item.room}}</td>
                   <!-- 状态 -->
-                  <td v-if="item.state === '已出租'"><div class="rent-out">{{item.state}}</div></td>
-                  <td v-else-if="item.state === '当前房间'"><div class="current-room">{{item.state}}</div></td>
-                  <td v-else><div id="110" class="not-rent"
+                  <td v-if="item.state === 1"><div class="rent-out">已出租</div></td>
+                  <td v-else-if="item.state === 0"><div :id="item.id" class="not-rent"
                     @mouseover="mouseoverHtml($event)"
                     @mouseout="mouseoutHtml($event)"
-                    @click="viewProperty($event)">{{item.state}}</div></td>
+                    @click="viewProperty($event)">可出租</div></td>
+                  <td v-else><div class="current-room">当前房间</div></td>
                   <!-- 室友 -->
                   <td>{{item.chum}}</td>
                   <!-- 建筑面积 -->
-                  <td>{{item.areaArch}}</td>
+                  <td>{{item.areaArch}}㎡</td>
                   <!-- 独卫 -->
-                  <td v-if="item.toilet === 'yes'"><i class="el-icon-success"></i></td>
+                  <td v-if="item.toilet === 1"><i class="el-icon-success"></i></td>
                   <td v-else><i class="el-icon-error"></i></td>
                   <!-- 淋浴 -->
-                  <td v-if="item.bathroom === 'yes'"><i class="el-icon-success"></i></td>
+                  <td v-if="item.bathroom === 1"><i class="el-icon-success"></i></td>
                   <td v-else><i class="el-icon-error"></i></td>
                   <!-- 阳台 -->
-                  <td v-if="item.balcony === 'yes'"><i class="el-icon-success"></i></td>
+                  <td v-if="item.balcony === 1"><i class="el-icon-success"></i></td>
                   <td v-else><i class="el-icon-error"></i></td>
                   <!-- 租金 -->
-                  <td>{{item.rent}}</td>
+                  <td>{{item.rent}} 元/月</td>
                 </tr>
               </tbody>
             </table>
@@ -94,34 +94,34 @@
                 <img src="@/assets/community.jpg">
               </div>
               <div class="community-info">
-                <h2>苹果社区南区</h2>
+                <h2>{{communityInfo.communityName}}</h2>
                 <div class="village-item">
                   <span class="title">建筑年代</span>
-                  <span class="info">2000</span>
+                  <span class="info" v-if="communityInfo.buildingAge !== 0">{{communityInfo.buildingAge}}</span>
                 </div>
                 <div class="village-item">
                   <span class="title">建筑类型</span>
-                  <span class="info">塔板结合</span>
+                  <span class="info">{{communityInfo.buildingType}}</span>
                 </div>
                 <div class="village-item">
                   <span class="title">供暖方式</span>
-                  <span class="info">集体供暖</span>
+                  <span class="info">{{communityInfo.heatingMethod}}</span>
                 </div>
                 <div class="village-item">
                   <span class="title">绿化率</span>
-                  <span class="info">35%</span>
+                  <span class="info" v-if="communityInfo.greeningRate !== 0.0">{{communityInfo.greeningRate}}%</span>
                 </div>
                 <div class="village-item">
                   <span class="title">容积率</span>
-                  <span class="info">0.036</span>
+                  <span class="info" v-if="communityInfo.plotRatio !== 0.0">{{communityInfo.plotRatio}}</span>
                 </div>
                 <div class="village-item property">
                   <span class="title">物业公司</span>
-                  <span class="info">深圳市万泽房地产有限公司</span>
+                  <span class="info">{{communityInfo.propertyCompany}}</span>
                 </div>
                 <div class="village-item property">
                   <span class="title">物业电话</span>
-                  <span class="info">075525815427</span>
+                  <span class="info">{{communityInfo.propertyPhone}}</span>
                 </div>
               </div>
             </div>
@@ -132,79 +132,19 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'MainInfo',
+  props: {
+    chumInfo: Object,
+    communityInfo: Object,
+    allocation: Array
+  },
   data () {
     return {
       showMore: true,
-      chumInfo: [{
-        room: 'A房间',
-        state: '当前房间',
-        chum: '--',
-        areaArch: '10㎡',
-        toilet: 'yes',
-        bathroom: 'yes',
-        balcony: 'yes',
-        rent: '2830 元/月'
-      }, {
-        room: 'B房间',
-        state: '已出租',
-        chum: '女',
-        areaArch: '12㎡',
-        toilet: 'yes',
-        bathroom: 'yes',
-        balcony: 'yes',
-        rent: '2530 元/月'
-      }, {
-        room: 'C房间',
-        state: '可出租',
-        chum: '--',
-        areaArch: '10㎡',
-        toilet: 'yes',
-        bathroom: 'yes',
-        balcony: 'no',
-        rent: '2230 元/月'
-      }],
-      allocationInfo: [{
-        allocationUnicode: '&#xe619;',
-        allocationWord: '智能锁'
-      }, {
-        allocationUnicode: '&#xe64f;',
-        allocationWord: '路由器'
-      }, {
-        allocationUnicode: '&#xe63f;',
-        allocationWord: '冰箱'
-      }, {
-        allocationUnicode: '&#xe601;',
-        allocationWord: '微波炉'
-      }, {
-        allocationUnicode: '&#xe735;',
-        allocationWord: '洗衣机'
-      }, {
-        allocationUnicode: '&#xe645;',
-        allocationWord: '热水器'
-      }, {
-        allocationUnicode: '&#xe666;',
-        allocationWord: '浴霸'
-      }, {
-        allocationUnicode: '&#xe604;',
-        allocationWord: '衣柜'
-      }, {
-        allocationUnicode: '&#xe643;',
-        allocationWord: '床垫'
-      }, {
-        allocationUnicode: '&#xe651;',
-        allocationWord: '空调'
-      }, {
-        allocationUnicode: '&#xe608;',
-        allocationWord: '床'
-      }, {
-        allocationUnicode: '&#xe611;',
-        allocationWord: '桌子'
-      }, {
-        allocationUnicode: '&#xe616;',
-        allocationWord: '椅子'
-      }]
+      allocationInfo: []
     }
   },
   methods: {
@@ -232,7 +172,27 @@ export default {
     },
     viewProperty (e) {
       this.$router.push('/room/' + e.currentTarget.id)
+    },
+    getAllocationInfo () {
+      axios.get('/local/allocation.json')
+        .then(this.handleGetAllocationInfo)
+    },
+    handleGetAllocationInfo (res) {
+      res = res.data.data
+      for (var item of this.allocation) {
+        for (var i of res) {
+          if (item === i['key']) {
+            this.allocationInfo.push({
+              allocationUnicode: i['value'],
+              allocationWord: i['key']
+            })
+          }
+        }
+      }
     }
+  },
+  mounted () {
+    this.getAllocationInfo()
   }
 }
 </script>

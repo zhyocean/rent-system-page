@@ -70,6 +70,7 @@
                 <el-table-column prop="toward" label="朝向"></el-table-column>
                 <el-table-column prop="floor" label="楼层"></el-table-column>
                 <el-table-column prop="lift" label="电梯"></el-table-column>
+                <el-table-column prop="rentState" label="出租状态"></el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
                     <el-button @click="houseResourceHandle(scope.$index, scope.row)" size="mini">查看</el-button>
@@ -88,6 +89,7 @@
                   <el-option label="C室" value="C室"></el-option>
                   <el-option label="D室" value="D室"></el-option>
                   <el-option label="E室" value="E室"></el-option>
+                  <el-option label="整租" value="整租"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="租金*" label-width="120px">
@@ -112,8 +114,8 @@
               </el-form-item>
               <el-form-item label="电梯*" label-width="120px">
                   <el-select v-model="houseResourceData.lift">
-                    <el-option label="有" value="有"></el-option>
-                    <el-option label="无" value="无"></el-option>
+                    <el-option label="有" value="1"></el-option>
+                    <el-option label="无" value="0"></el-option>
                   </el-select>
               </el-form-item>
               <el-form-item label="年代*" label-width="120px">
@@ -234,7 +236,7 @@ export default {
       this.inputAreaValue = ''
     },
     houseResourceHandle (index, row) {
-      this.$router.push(row.houseUrl)
+      this.$router.push('/room/' + row.id)
     },
     handleRemove (file, fileList) {
       for (var i = 0; i <= this.houseResourceData.roomPics.length; i++) {
@@ -275,6 +277,20 @@ export default {
       }
     },
     landlordFormHandle () {
+      if (this.landlordData.name === '') {
+        this.$message({
+          message: '请输入姓名',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.landlordData.community.communityName === '') {
+        this.$message({
+          message: '请输入小区名称',
+          type: 'warning'
+        })
+        return
+      }
       axios({
         url: '/api/saveLandlordInfo',
         data: {
@@ -311,6 +327,90 @@ export default {
         })
     },
     saveHouseResourceBtn () {
+      if (this.houseResourceData.houseName === '') {
+        this.$message({
+          message: '请选择房屋名称',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.houseResourceData.rent === '') {
+        this.$message({
+          message: '请输入租金',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.houseResourceData.buildArea === '') {
+        this.$message({
+          message: '请输入建筑面积',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.houseResourceData.toward === '') {
+        this.$message({
+          message: '请输入房间朝向',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.houseResourceData.doorModel === '') {
+        this.$message({
+          message: '请输入房间户型',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.houseResourceData.location === '') {
+        this.$message({
+          message: '请输入房间地理位置',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.houseResourceData.floor === '') {
+        this.$message({
+          message: '请输入房间楼层',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.houseResourceData.lift === '') {
+        this.$message({
+          message: '请选择是否有电梯',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.houseResourceData.era === '') {
+        this.$message({
+          message: '请输入房屋修建年代',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.houseResourceData.allocations.length === 0) {
+        this.$message({
+          message: '请选择房屋设施',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.houseResourceData.areaTags.length === 0) {
+        this.$message({
+          message: '请输入房屋所在区域',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.houseResourceData.roomPics.length === 0) {
+        this.$message({
+          message: '请上传房屋照片',
+          type: 'warning'
+        })
+        return
+      }
       axios({
         url: '/api/saveHouseResource',
         data: {

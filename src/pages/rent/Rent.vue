@@ -5,7 +5,7 @@
       :area="area"
       :subway="subway"
     ></rent-search>
-    <rent-result></rent-result>
+    <rent-result :houseResources="houseResources"></rent-result>
     <home-footer></home-footer>
   </div>
 </template>
@@ -28,7 +28,8 @@ export default {
   data () {
     return {
       area: [],
-      subway: []
+      subway: [],
+      houseResources: []
     }
   },
   methods: {
@@ -38,20 +39,34 @@ export default {
     },
     handleGetSearchInfo (res) {
       res = res.data
-      var ret = res.ret
-      var data = res.data
-      if (ret && data) {
-        for (var thisCity in data) {
-          if (thisCity === this.$store.state.city) {
-            this.area = data[thisCity]['area']
-            this.subway = data[thisCity]['subway']
-          }
+      for (var thisCity in res) {
+        if (thisCity === this.$store.state.city) {
+          this.area = res[thisCity]['area']
+          this.subway = res[thisCity]['subway']
         }
       }
+    },
+    getRoomInfoByCity () {
+      axios({
+        url: '/api/getRoomInfoByCity',
+        data: {
+          city: this.$store.state.city
+        },
+        method: 'post',
+        header: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => {
+          if (res.data.status === 0) {
+            this.houseResources = res.data.data
+          }
+        })
     }
   },
   mounted () {
     this.getSearchInfo()
+    this.getRoomInfoByCity()
   },
   computed: {
     city () {

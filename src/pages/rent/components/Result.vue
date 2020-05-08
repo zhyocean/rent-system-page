@@ -16,22 +16,22 @@
         <el-divider class="title-line"></el-divider>
       </div>
       <div class="pic-list">
-        <div class="item">
-          <router-link to="/room/110">
+        <div class="item" v-for="(item, index) of houseResources" :key="index">
+          <router-link :to="'/room/' + item.id">
             <div class="item-title">
-              <img src="@/assets/home/service_pic1.jpg" alt="">
+              <img :src="item.roomPic" alt="">
             </div>
           </router-link>
           <div class="item-info">
             <h5 class="info-title">
-              <el-tag class="item-tag" effect="dark" type="info">转</el-tag>
-              <router-link class="room-url" to="/room/110"><a>整租·叠翠庭苑2室1厅-南北</a></router-link>
+              <el-tag class="item-tag" effect="dark" type="info">签</el-tag>
+              <router-link class="room-url" :to="'/room/' + item.id"><a>{{item.houseName}}</a></router-link>
             </h5>
             <div class="room-info">
               <div>
-                86㎡ | 1/28层
+                {{item.buildArea}}㎡ | {{item.floor}}层
               </div>
-              <div class="iconfont location">&#xe638;小区距郭庄子站步行约358米</div>
+              <div class="iconfont location">&#xe638;{{item.location}}</div>
             </div>
             <div class="tags">
               <span class="tag">可预签7天</span>
@@ -42,79 +42,24 @@
               <span class="iconfont">&#xe600;</span>空气质量已检测
             </div>
             <div class="price">
-              ￥<span>1231</span>/月
+              ￥<span>{{item.rent}}</span>/月
             </div>
           </div>
         </div>
-        <div class="item middle">
-          <router-link to="/room/110">
-            <div class="item-title">
-              <img src="@/assets/home/service_pic1.jpg" alt="">
-            </div>
-          </router-link>
-          <div class="item-info">
-            <h5 class="info-title">
-              <el-tag class="item-tag" effect="dark" type="info">转</el-tag>
-              <router-link class="room-url" to="/room/110"><a>整租·叠翠庭苑2室1厅-南北</a></router-link>
-            </h5>
-            <div class="room-info">
-              <div>
-                86㎡ | 1/28层
-              </div>
-              <div class="iconfont location">&#xe638;小区距郭庄子站步行约358米</div>
-            </div>
-            <div class="tags">
-              <span class="tag">可预签7天</span>
-              <span class="tag">深呼吸1.0</span>
-              <span class="tag">拿铁4.0</span>
-            </div>
-            <div class="tips">
-              <span class="iconfont">&#xe600;</span>空气质量已检测
-            </div>
-            <div class="price">
-              ￥<span>1231</span>/月
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <router-link to="/room/110">
-            <div class="item-title">
-              <img src="@/assets/home/service_pic1.jpg" alt="">
-            </div>
-          </router-link>
-          <div class="item-info">
-            <h5 class="info-title">
-              <el-tag class="item-tag" effect="dark" type="info">转</el-tag>
-              <router-link class="room-url" to="/room/110"><a>整租·叠翠庭苑2室1厅-南北</a></router-link>
-            </h5>
-            <div class="room-info">
-              <div>
-                86㎡ | 1/28层
-              </div>
-              <div class="iconfont location">&#xe638;小区距郭庄子站步行约358米</div>
-            </div>
-            <div class="tags">
-              <span class="tag">可预签7天</span>
-              <span class="tag">深呼吸1.0</span>
-              <span class="tag">拿铁4.0</span>
-            </div>
-            <div class="tips">
-              <span class="iconfont">&#xe600;</span>空气质量已检测
-            </div>
-            <div class="price">
-              ￥<span>1231</span>/月
-            </div>
-          </div>
-        </div>
-        <el-pagination class="paging" background layout="prev, pager, next" :total="1000">
-        </el-pagination>
+        <!-- <el-pagination class="paging" background layout="prev, pager, next" :total="1000">
+        </el-pagination> -->
       </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'Result',
+  props: {
+    houseResources: Array
+  },
   data () {
     return {
       showItem: 'default',
@@ -126,12 +71,36 @@ export default {
     handleSort (event) {
       if (event.target.id !== '') {
         this.showItem = event.target.id
+        var rank = false
         if (event.target.id === 'priceSort') {
           this.priceClickSpy = !this.priceClickSpy
+          rank = this.priceClickSpy
         }
         if (event.target.id === 'areaSort') {
           this.areaClickSpy = !this.areaClickSpy
+          rank = this.areaClickSpy
         }
+        if (rank) {
+          rank = 'asc'
+        } else {
+          rank = 'desc'
+        }
+        axios({
+          url: '/api/getRoomInfoByCityAndSort',
+          data: {
+            city: this.$store.state.city,
+            sort: event.target.id,
+            rank: rank
+          },
+          method: 'post',
+          header: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(res => {
+            this.houseResources = []
+            this.houseResources = res.data.data
+          })
       }
     }
   },
@@ -190,6 +159,7 @@ export default {
         display: inline-block;
         margin-bottom: 30px;
         color: rgba(0,0,0,.4);
+        margin-right: 21px;
       }
         .item-title{
           height: 270px;
@@ -256,9 +226,6 @@ export default {
             color: #ff961e;
             font-size: 25px;
           }
-      .middle{
-        margin: 0 21px;
-      }
       .paging{
         text-align: center;
       }

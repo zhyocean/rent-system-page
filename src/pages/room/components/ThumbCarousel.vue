@@ -2,13 +2,13 @@
   <div class="swiper-box" style="height: 700px;width:700px">
     <!-- swiper1 -->
     <swiper :options="swiperOptionTop" class="gallery-top" ref="swiperTop">
-      <swiper-slide class="imgs" v-for="(item, index) of img" :key="index" :style="{backgroundImage:`url(${require('@/assets/'+item)})`}"></swiper-slide>
+      <swiper-slide class="imgs" v-for="(item, index) of roomPic" :key="index" :style="{backgroundImage:'url('+item+')'}"></swiper-slide>
       <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
       <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
     </swiper>
     <!-- swiper2 Thumbs -->
     <swiper :options="swiperOptionThumbs" class="gallery-thumbs" ref="swiperThumbs">
-      <swiper-slide v-for="(item, index) of img" :key="index" :style="{backgroundImage:`url(${require('@/assets/'+item)})`}"></swiper-slide>
+      <swiper-slide v-for="(item, index) of roomPic" :key="index" :style="{backgroundImage:'url('+item+')'}"></swiper-slide>
     </swiper>
   </div>
 </template>
@@ -17,19 +17,16 @@ import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 
 export default {
-  name: 'swiper-example-thumbs-gallery',
-  title: 'Thumbs gallery with Two-way control',
+  name: 'ThumbCarousel',
+  props: {
+    roomPic: Array
+  },
   components: {
     Swiper,
     SwiperSlide
   },
   data () {
     return {
-      img: [
-        'surmon-1.jpg',
-        'surmon-2.jpg',
-        'surmon-3.jpg'
-      ],
       swiperOptionTop: {
         loop: true,
         loopedSlides: 5, // looped slides should be the same

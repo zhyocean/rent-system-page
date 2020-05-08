@@ -42,6 +42,11 @@
               <span class="change-user-info" @click="changeInfo('change-phone')">修改</span>
             </div>
             <div class="item">
+              <div class="item-title">性别</div>
+              <el-radio v-model="userInfo.gender" label="1">男</el-radio>
+              <el-radio v-model="userInfo.gender" label="2">女</el-radio>
+            </div>
+            <div class="item">
               <div class="item-title">邮箱</div>
               <input class="item-input" type="text" v-model="userInfo.email">
             </div>
@@ -150,7 +155,8 @@ export default {
         url: '/api/saveUserInfo',
         data: {
           username: this.userInfo.username,
-          email: this.userInfo.email
+          email: this.userInfo.email,
+          gender: this.userInfo.gender
         },
         method: 'post',
         header: {

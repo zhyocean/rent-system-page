@@ -91,27 +91,27 @@
           <div class="info">{{roomInfo.era}}年建成</div>
         </div>
         <div class="rj-button">
-          <p class="order-table" @click="dialogOrderTable = true">预约看房</p>
+          <p class="order-table" @click="orderTableClick">预约看房</p>
           <p class="collection">收藏</p>
         </div>
         <el-dialog class="dialog-order-table" title="咨询约看" :visible.sync="dialogOrderTable" width="23%">
           <div class="order-table-info">
-            <img :src="stewardPic">
+            <img :src="stewardInfo.portrait">
             <div class="dialog-content">
-              <h3>{{stewardName}} <i class="iconfont">&#xe654;</i></h3>
+              <h3>{{stewardInfo.name}} <i class="iconfont">&#xe654;</i></h3>
               <span>提交约看后我会尽快联系您确认时间和地点</span>
             </div>
           </div>
           <div class="order-table-dialog">
-            <el-date-picker v-model="orderTime" type="date" placeholder="选择日期"></el-date-picker>
+            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="orderTime" type="date" placeholder="选择日期"></el-date-picker>
           </div>
           <div class="order-table-dialog">
             <i class="iconfont">&#xe6f4;</i>
-            <input type="text" class="order-table-input" placeholder="请输入您的手机" :value="orderPhone">
+            <input type="text" class="order-table-input" placeholder="请输入您的手机" v-model="orderPhone">
           </div>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogOrderTable = false">取 消</el-button>
-            <el-button type="primary" @click="dialogOrderTable = false">确 定</el-button>
+            <el-button type="primary" @click="orderRoom">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -121,6 +121,7 @@
 
 <script>
 import ThumbCarousel from './ThumbCarousel'
+import axios from 'axios'
 
 export default {
   name: 'Detail',
@@ -131,10 +132,12 @@ export default {
     return {
       dialogPaymentMethod: false,
       dialogOrderTable: false,
-      orderTime: '2020-04-06',
-      orderPhone: '19940790216',
-      stewardName: '秦芮',
-      stewardPic: 'http://pic.ziroom.com/steward_images/60019508.png',
+      orderTime: '',
+      orderPhone: '',
+      stewardInfo: {
+        name: '',
+        portrait: ''
+      },
       paymentData: [{
         paymentMethod: '月付',
         rent: '￥8600',
@@ -161,9 +164,75 @@ export default {
   components: {
     ThumbCarousel
   },
-  mehods: {
+  methods: {
     orderTableClick () {
-
+      axios({
+        url: '/api/getStewardInfo',
+        data: {
+          managementArea: this.roomInfo.areaTag[0]
+        },
+        method: 'post',
+        header: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => {
+          var data = res.data.data
+          this.stewardInfo.name = data.name
+          this.stewardInfo.portrait = data.portrait
+          this.dialogOrderTable = true
+        })
+    },
+    orderRoom () {
+      if (this.orderTime === '') {
+        this.$message({
+          message: '请选择约看时间',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.orderPhone === '') {
+        this.$message({
+          message: '请输入您的手机号',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.$store.state.VERIFIED_ACCOUNT !== '') {
+        axios({
+          url: '/api/orderRoom',
+          data: {
+            orderTime: this.orderTime,
+            orderPhone: this.orderPhone,
+            roomId: this.roomInfo.id
+          },
+          method: 'post',
+          header: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(res => {
+            if (res.data.status === 109) {
+              this.$message.error('请先登录！')
+              this.dialogOrderTable = false
+            } else if (res.data.status === 113) {
+              this.$message({
+                message: res.data.message,
+                type: 'warning'
+              })
+              this.dialogOrderTable = false
+            } else {
+              this.$message({
+                message: '约看成功，请等待管家联系您',
+                type: 'success'
+              })
+              this.dialogOrderTable = false
+            }
+          })
+      } else {
+        this.$message.error('请先登录！')
+        this.dialogOrderTable = false
+      }
     }
   }
 }

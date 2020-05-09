@@ -4,7 +4,8 @@
     <room-detail :roomInfo="roomInfo"></room-detail>
     <room-main-info :chumInfo="roomInfo.chumInfo"
                     :communityInfo="roomInfo.communityInfo"
-                    :allocation="roomInfo.allocation"></room-main-info>
+                    :allocation="roomInfo.allocation"
+                    :houseBrief="roomInfo.houseBrief"></room-main-info>
     <home-footer></home-footer>
   </div>
 </template>

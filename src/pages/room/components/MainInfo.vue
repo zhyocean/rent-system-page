@@ -32,7 +32,7 @@
       <div class="main-info">
           <div class="house-profile">
               <h2>房源简介</h2>
-              <p>南向卧室带阳台，自如清新装修，格局大方，采光好，房子干净整洁，小区整洁干净，给你一种家的温馨之感。欢迎您的入住~</p>
+              <p>{{houseBrief}}</p>
               <div class="housing-allocation">
                   <div ref="allocations" class="allocation-item" v-for="(item, index) of allocationInfo" :key="index" v-show="index < 6">
                     <div class="iconfont" v-html="item.allocationUnicode"></div>
@@ -139,7 +139,8 @@ export default {
   props: {
     chumInfo: Object,
     communityInfo: Object,
-    allocation: Array
+    allocation: Array,
+    houseBrief: String
   },
   data () {
     return {

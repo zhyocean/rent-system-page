@@ -8,8 +8,8 @@
     </div>
     <div class="search-box">
       <div class="box-menu">
-        <input type="text" class="box-input" placeholder="请输入区域、地铁站、小区名开始找房">
-        <div class="find-house">开始找房</div>
+        <input type="text" class="box-input" placeholder="请输入区域、地铁站、小区名开始找房" v-model="searchRoomInput">
+        <div class="find-house" @click="handleSearchRoom">开始找房</div>
       </div>
       <div class="result-box">
         <div class="item">
@@ -56,11 +56,12 @@
           <div class="option-list">
             <el-radio-group v-model="searchCriteria.price" @change="addTag">
               <el-radio-button label="不限"></el-radio-button>
-              <el-radio-button label="1500元以下"></el-radio-button>
-              <el-radio-button label="1500~2000元"></el-radio-button>
-              <el-radio-button label="2000~2500元"></el-radio-button>
-              <el-radio-button label="2500~3000元"></el-radio-button>
-              <el-radio-button label="3000元以上"></el-radio-button>
+              <el-radio-button label="0-1500">0-1500</el-radio-button>
+              <el-radio-button label="1500-2000">1500~2000元</el-radio-button>
+              <el-radio-button label="2000-2500">2000~2500元</el-radio-button>
+              <el-radio-button label="2500-3000">2500~3000元</el-radio-button>
+              <el-radio-button label="3000-5000">3000~5000元</el-radio-button>
+              <el-radio-button label="5000-100000">5000元以上</el-radio-button>
             </el-radio-group>
           </div>
         </div>
@@ -69,10 +70,11 @@
           <div class="option-list">
             <el-radio-group v-model="searchCriteria.roomNum" @change="addTag">
               <el-radio-button label="不限"></el-radio-button>
-              <el-radio-button label="一居室"></el-radio-button>
-              <el-radio-button label="两居室"></el-radio-button>
-              <el-radio-button label="三居室"></el-radio-button>
-              <el-radio-button label="四居室以上"></el-radio-button>
+              <el-radio-button label="1室1厅">一居室</el-radio-button>
+              <el-radio-button label="2室1厅">两居室</el-radio-button>
+              <el-radio-button label="3室1厅">三居室</el-radio-button>
+              <el-radio-button label="4室1厅">四居室</el-radio-button>
+              <el-radio-button label="5室1厅">五居室</el-radio-button>
             </el-radio-group>
           </div>
         </div>
@@ -91,12 +93,11 @@
           <div class="option-list">
             <el-radio-group v-model="searchCriteria.feature" @change="addTag">
               <el-radio-button label="不限"></el-radio-button>
-              <el-radio-button label="独立卫生间"></el-radio-button>
-              <el-radio-button label="独立阳台"></el-radio-button>
-              <el-radio-button label="智能锁"></el-radio-button>
-              <el-radio-button label="有电梯"></el-radio-button>
-              <el-radio-button label="离地铁近"></el-radio-button>
-              <el-radio-button label="月租"></el-radio-button>
+              <el-radio-button label="独卫">独立卫生间</el-radio-button>
+              <el-radio-button label="淋浴">独立淋浴</el-radio-button>
+              <el-radio-button label="阳台">独立阳台</el-radio-button>
+              <el-radio-button label="有电梯">有电梯</el-radio-button>
+              <el-radio-button label="离地铁近">离地铁近</el-radio-button>
             </el-radio-group>
           </div>
         </div>
@@ -114,6 +115,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'Search',
   props: {
@@ -135,7 +138,8 @@ export default {
       },
       dynamicTags: [],
       areaStand: [],
-      subwayStand: []
+      subwayStand: [],
+      searchRoomInput: ''
     }
   },
   methods: {
@@ -211,9 +215,42 @@ export default {
       }
       this.areaStand = []
       this.subwayStand = []
+    },
+    handleSearchRoom () {
+      axios.get('/api/startLookingHouse?search_text=' + this.searchRoomInput + '&city=' + this.$store.state.city)
+        .then(res => {
+          this.$emit('startLookingHouse', res.data.data)
+        })
     }
   },
   watch: {
+    searchCriteria: {
+      deep: true,
+      handler (newVal, oldVal) {
+        axios({
+          url: '/api/searchRoomByCondition',
+          data: {
+            city: this.$store.state.city,
+            area: this.searchCriteria.area,
+            subway: this.searchCriteria.subway,
+            areaStand: this.searchCriteria.areaStand,
+            subwayStand: this.searchCriteria.subwayStand,
+            rent: this.searchCriteria.price,
+            doorModel: this.searchCriteria.roomNum,
+            roomType: this.searchCriteria.roomType,
+            feature: this.searchCriteria.feature
+          },
+          method: 'post',
+          header: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(res => {
+            this.$emit('startLookingHouse', res.data.data)
+            this.$emit('witchSearchCriteria', this.searchCriteria)
+          })
+      }
+    },
     'searchCriteria.area' (newData, oldData) {
       this.searchCriteria.areaStand = '不限'
       this.searchCriteria.subwayStand = '不限'

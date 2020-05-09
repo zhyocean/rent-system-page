@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
       <div class="result-title">
-        <p>已为您找到符合条件的 <span class="roomNum">12345套</span> 房源 </p>
+        <p>已为您找到符合条件的 <span class="roomNum">{{houseResources.length}}套</span> 房源 </p>
         <div class="showType">
             <span id="default" :class="[showItem == 'default' ? 'showItem' : '']" @click="handleSort($event)">默认排序</span>
             <span id="priceSort" :class="[showItem == 'priceSort' ? 'showItem' : '']" @click="handleSort($event)">价格
@@ -15,7 +15,7 @@
         </div>
         <el-divider class="title-line"></el-divider>
       </div>
-      <div class="pic-list">
+      <div class="pic-list" v-if="houseResources.length !== 0">
         <div class="item" v-for="(item, index) of houseResources" :key="index">
           <router-link :to="'/room/' + item.id">
             <div class="item-title">
@@ -49,6 +49,12 @@
         <!-- <el-pagination class="paging" background layout="prev, pager, next" :total="1000">
         </el-pagination> -->
       </div>
+      <div v-else>
+        <div class="no-search">
+          <img src="@/assets/no_search.png">
+          <p>未搜到对应房源，换个搜索条件试试</p>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -58,11 +64,12 @@ import axios from 'axios'
 export default {
   name: 'Result',
   props: {
-    houseResources: Array
+    houseResources: Array,
+    searchCriteria: Object,
+    showItem: String
   },
   data () {
     return {
-      showItem: 'default',
       priceClickSpy: false,
       areaClickSpy: false
     }
@@ -90,7 +97,15 @@ export default {
           data: {
             city: this.$store.state.city,
             sort: event.target.id,
-            rank: rank
+            rank: rank,
+            area: this.searchCriteria.area,
+            subway: this.searchCriteria.subway,
+            areaStand: this.searchCriteria.areaStand,
+            subwayStand: this.searchCriteria.subwayStand,
+            rent: this.searchCriteria.price,
+            doorModel: this.searchCriteria.roomNum,
+            roomType: this.searchCriteria.roomType,
+            feature: this.searchCriteria.feature
           },
           method: 'post',
           header: {
@@ -229,4 +244,16 @@ export default {
       .paging{
         text-align: center;
       }
+    .no-search img{
+      display: block;
+      margin: 0 auto;
+      width: 150px;
+      height: 150px;
+    }
+    .no-search p{
+      font-size: 12px;
+      color: rgba(0,0,0,.2);
+      text-align: center;
+      margin: 0;
+    }
 </style>

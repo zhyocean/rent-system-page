@@ -104,7 +104,13 @@
                 <el-input v-model="houseResourceData.toward" autocomplete="off" placeholder="如：东南"></el-input>
               </el-form-item>
               <el-form-item label="户型*" label-width="120px">
-                <el-input v-model="houseResourceData.doorModel" autocomplete="off" placeholder="如：2室1厅"></el-input>
+                <el-select v-model="houseResourceData.doorModel">
+                    <el-option label="1室1厅" value="1室1厅"></el-option>
+                    <el-option label="2室1厅" value="2室1厅"></el-option>
+                    <el-option label="3室1厅" value="3室1厅"></el-option>
+                    <el-option label="4室1厅" value="4室1厅"></el-option>
+                    <el-option label="5室1厅" value="5室1厅"></el-option>
+                  </el-select>
               </el-form-item>
               <el-form-item label="位置*" label-width="120px">
                 <el-input v-model="houseResourceData.location" autocomplete="off" placeholder="如：小区距xx站步行约xx米"></el-input>
@@ -129,17 +135,25 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item class="area-tag" label="区域*" label-width="120px">
-                <el-tag :key="tag" v-for="tag in houseResourceData.areaTags" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}</el-tag>
-                  <el-input class="input-new-tag" v-if="inputAreaVisible" v-model="inputAreaValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm"></el-input>
-                  <el-button v-else class="button-new-tag" size="small" @click="showInput">+</el-button>
+              <el-form-item label="地铁*" label-width="120px">
+                <el-cascader v-model="houseResourceData.subway" :options="options" :props="{ checkStrictly: true }" clearable></el-cascader>
               </el-form-item>
-              <el-form-item class="area-tag" label="房间设备" label-width="120px">
+              <el-form-item label="房间设备" label-width="120px">
                 <el-checkbox-group v-model="houseResourceData.facilities">
                   <el-checkbox label="独卫"></el-checkbox>
                   <el-checkbox label="淋浴"></el-checkbox>
                   <el-checkbox label="阳台"></el-checkbox>
                 </el-checkbox-group>
+              </el-form-item>
+              <el-form-item class="house-item" label="房屋简介*" label-width="120px">
+                <el-input v-model="houseResourceData.houseBrief " autocomplete="off" placeholder="简单描述下您的房屋">
+                </el-input>
+              </el-form-item>
+              <el-form-item class="area-tag" label="区域*" label-width="120px">
+                <el-tag :key="tag" v-for="tag in houseResourceData.areaTags" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}</el-tag>
+                  <el-input class="input-new-tag" v-if="inputAreaVisible" v-model="inputAreaValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm"></el-input>
+                  <el-button v-else class="button-new-tag" size="small" @click="showInput">+</el-button>
+                  <span>如：朝阳区 安华桥 玫瑰花城</span>
               </el-form-item>
               <el-form-item label="房间照片*" label-width="120px">
                 <el-checkbox-group>
@@ -208,13 +222,16 @@ export default {
         floor: '',
         lift: '',
         era: '',
+        houseBrief: '',
         allocations: [],
         areaTags: [],
         facilities: [],
-        roomPics: []
+        roomPics: [],
+        subway: []
       },
       inputAreaVisible: false,
-      inputAreaValue: ''
+      inputAreaValue: '',
+      options: []
     }
   },
   methods: {
@@ -265,8 +282,8 @@ export default {
       return true
     },
     rentalBtn () {
-      this.houseResourceData.roomPics = []
       this.houseResourceForm = true
+      this.getSubwayInfo()
     },
     phoneCheck (phone) {
       var telStr = /^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$/
@@ -327,6 +344,7 @@ export default {
         })
     },
     saveHouseResourceBtn () {
+      console.log(this.houseResourceData.area)
       if (this.houseResourceData.houseName === '') {
         this.$message({
           message: '请选择房屋名称',
@@ -357,7 +375,7 @@ export default {
       }
       if (this.houseResourceData.doorModel === '') {
         this.$message({
-          message: '请输入房间户型',
+          message: '请选择房间户型',
           type: 'warning'
         })
         return
@@ -397,6 +415,20 @@ export default {
         })
         return
       }
+      if (this.houseResourceData.subway.length === 0) {
+        this.$message({
+          message: '请选择房屋靠近的地铁',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.houseResourceData.houseBrief === '') {
+        this.$message({
+          message: '请输入房屋简介',
+          type: 'warning'
+        })
+        return
+      }
       if (this.houseResourceData.areaTags.length === 0) {
         this.$message({
           message: '请输入房屋所在区域',
@@ -426,7 +458,9 @@ export default {
           allocations: this.houseResourceData.allocations,
           areaTags: this.houseResourceData.areaTags,
           facilities: this.houseResourceData.facilities,
-          roomPics: this.houseResourceData.roomPics
+          roomPics: this.houseResourceData.roomPics,
+          houseBrief: this.houseResourceData.houseBrief,
+          subway: this.houseResourceData.subway
         },
         method: 'post',
         header: {
@@ -440,6 +474,38 @@ export default {
           } else if (res.data.status === 0) {
             this.houseResourceForm = false
             this.houseResourceInfos.push(res.data.data)
+          }
+        })
+    },
+    getSubwayInfo () {
+      this.options = []
+      axios.get('/local/search.json')
+        .then(res => {
+          var city = this.$store.state.city
+          res = res.data
+          for (var thisCity in res) {
+            if (thisCity === city) {
+              var subway = res[thisCity]['subway']
+              for (var s of subway) {
+                if (s['subway'] !== '不限') {
+                  var stands = s['stand']
+                  console.log(stands)
+                  var childrens = []
+                  for (var stand of stands) {
+                    childrens.push({
+                      value: stand,
+                      label: stand
+                    })
+                  }
+                  this.options.push({
+                    value: s['subway'],
+                    label: s['subway'],
+                    children: childrens
+                  })
+                }
+              }
+              break
+            }
           }
         })
     }
@@ -478,12 +544,21 @@ export default {
     width: 400px;
     display: inline-block;
   }
+  .house-resource-form >>> .house-item{
+    display: block;
+    width: 85%;
+  }
   .landlord-form >>> .el-form-item{
     width: 400px;
     display: inline-block;
   }
   .area-tag{
-      width: 100%!important;
+    width: 100%!important;
+  }
+  .area-tag >>> span{
+    font-size: 13px;
+    color: rgba(0,0,0,.2);
+    margin-left: 10px;
   }
   .el-select{
     width: 100%;

@@ -4,8 +4,12 @@
     <rent-search
       :area="area"
       :subway="subway"
+      @startLookingHouse="getSearchRoomInfo"
+      @witchSearchCriteria="witchSearchCriteria"
     ></rent-search>
-    <rent-result :houseResources="houseResources"></rent-result>
+    <rent-result :houseResources="houseResources"
+                 :searchCriteria="searchCriteria"
+                 :showItem="showItem"></rent-result>
     <home-footer></home-footer>
   </div>
 </template>
@@ -29,7 +33,18 @@ export default {
     return {
       area: [],
       subway: [],
-      houseResources: []
+      houseResources: [],
+      searchCriteria: {
+        area: '不限',
+        subway: '不限',
+        areaStand: '不限',
+        subwayStand: '不限',
+        price: '不限',
+        roomNum: '不限',
+        roomType: '不限',
+        feature: '不限'
+      },
+      showItem: 'default'
     }
   },
   methods: {
@@ -43,6 +58,7 @@ export default {
         if (thisCity === this.$store.state.city) {
           this.area = res[thisCity]['area']
           this.subway = res[thisCity]['subway']
+          break
         }
       }
     },
@@ -62,6 +78,13 @@ export default {
             this.houseResources = res.data.data
           }
         })
+    },
+    getSearchRoomInfo (data) {
+      this.houseResources = data
+    },
+    witchSearchCriteria (data) {
+      this.searchCriteria = data
+      this.showItem = 'default'
     }
   },
   mounted () {

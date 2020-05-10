@@ -92,7 +92,7 @@
         </div>
         <div class="rj-button">
           <p class="order-table" @click="orderTableClick">预约看房</p>
-          <p class="collection">收藏</p>
+          <p class="collection" @click="collectClick">{{roomInfo.collectState}}</p>
         </div>
         <el-dialog class="dialog-order-table" title="咨询约看" :visible.sync="dialogOrderTable" width="23%">
           <div class="order-table-info">
@@ -107,7 +107,7 @@
           </div>
           <div class="order-table-dialog">
             <i class="iconfont">&#xe6f4;</i>
-            <input type="text" class="order-table-input" placeholder="请输入您的手机" v-model="orderPhone">
+            <input type="text" disabled class="order-table-input" placeholder="请输入您的手机" v-model="orderPhone">
           </div>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogOrderTable = false">取 消</el-button>
@@ -166,6 +166,10 @@ export default {
   },
   methods: {
     orderTableClick () {
+      if (this.$store.state.VERIFIED_ACCOUNT === '') {
+        this.$message.error('请先登录！')
+        return
+      }
       axios({
         url: '/api/getStewardInfo',
         data: {
@@ -178,10 +182,51 @@ export default {
       })
         .then(res => {
           var data = res.data.data
-          this.stewardInfo.name = data.name
-          this.stewardInfo.portrait = data.portrait
+          this.stewardInfo.name = data.steward.name
+          this.stewardInfo.portrait = data.steward.portrait
+          this.orderPhone = data.userPhone
           this.dialogOrderTable = true
         })
+    },
+    collectClick () {
+      if (this.roomInfo.collectState === '已收藏') {
+        this.$message({
+          message: '已收藏该房间',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.$store.state.VERIFIED_ACCOUNT !== '') {
+        axios({
+          url: '/api/collectRoom',
+          data: {
+            roomId: this.roomInfo.id
+          },
+          method: 'post',
+          header: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(res => {
+            if (res.data.status === 109) {
+              this.$message.error('请先登录！')
+              this.dialogOrderTable = false
+            } else if (res.data.status === 114) {
+              this.$message({
+                message: res.data.message,
+                type: 'warning'
+              })
+            } else {
+              this.$message({
+                message: '收藏成功',
+                type: 'success'
+              })
+              this.roomInfo.collectState = '已收藏'
+            }
+          })
+      } else {
+        this.$message.error('请先登录！')
+      }
     },
     orderRoom () {
       if (this.orderTime === '') {
@@ -191,19 +236,11 @@ export default {
         })
         return
       }
-      if (this.orderPhone === '') {
-        this.$message({
-          message: '请输入您的手机号',
-          type: 'warning'
-        })
-        return
-      }
       if (this.$store.state.VERIFIED_ACCOUNT !== '') {
         axios({
           url: '/api/orderRoom',
           data: {
             orderTime: this.orderTime,
-            orderPhone: this.orderPhone,
             roomId: this.roomInfo.id
           },
           method: 'post',
@@ -233,6 +270,31 @@ export default {
         this.$message.error('请先登录！')
         this.dialogOrderTable = false
       }
+    },
+    getCollectState () {
+      axios({
+        url: '/api/getCollectState',
+        data: {
+          roomId: this.roomInfo.id
+        },
+        method: 'post',
+        header: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => {
+          this.roomInfo.collectState = res.data.data
+        })
+    }
+  },
+  computed: {
+    VERIFIED_ACCOUNT () {
+      return this.$store.state.VERIFIED_ACCOUNT
+    }
+  },
+  watch: {
+    VERIFIED_ACCOUNT () {
+      this.getCollectState()
     }
   }
 }

@@ -5,7 +5,7 @@
         <span>发布房源</span>
       </div>
       <div class="content">
-        <div v-if="landlordList.length === 0">
+        <div v-if="landlords.length === 0">
           <div class="not-certificate">您未进行房东验证，请尽快进行验证！</div>
             <el-button class="landlord-button" type="warning" @click="dialogLandlordForm = true">成为房东</el-button>
             <!-- 成为房东模态框 -->
@@ -62,7 +62,7 @@
             </el-dialog>
           </div>
         </div>
-        <div v-if="landlordList.length > 0">
+        <div v-if="landlords.length > 0">
             <template>
               <el-table :data="houseResourceInfos" style="width: 100%">
                 <el-table-column prop="houseName" label="房屋名称" width="250"></el-table-column>
@@ -188,15 +188,13 @@ import axios from 'axios'
 export default {
   name: 'Landlord',
   props: {
-    phone: String,
-    landlords: Array,
-    houseResourceInfos: Array
+    phone: String
   },
   data () {
     return {
       dialogLandlordForm: false,
       houseResourceForm: false,
-      landlordList: this.landlords,
+      landlords: [],
       landlordData: {
         name: '',
         phone: this.phone,
@@ -231,7 +229,8 @@ export default {
       },
       inputAreaVisible: false,
       inputAreaValue: '',
-      options: []
+      options: [],
+      houseResourceInfos: []
     }
   },
   methods: {
@@ -334,7 +333,7 @@ export default {
             this.$message.error('您尚未登录！')
           }
           if (res.data.status === 0) {
-            this.landlordList.push({
+            this.landlords.push({
               name: this.landlordData.name,
               phone: this.landlordData.phone,
               houseCity: this.landlordData.houseCity,
@@ -508,7 +507,48 @@ export default {
             }
           }
         })
+    },
+    getLandlordInfo () {
+      axios({
+        url: '/api/getLandlordInfo',
+        data: {
+        },
+        method: 'post',
+        header: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => {
+          if (res.data.status === 0) {
+            this.landlords = res.data.data
+            if (this.landlords.length > 0) {
+              this.getHouseResourceInfo()
+            }
+          }
+        })
+    },
+    getHouseResourceInfo () {
+      axios({
+        url: '/api/getHouseResourceInfo',
+        data: {
+        },
+        method: 'post',
+        header: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
+        if (res.data.status === 109) {
+          this.$router.push('/')
+          this.$message.error('您尚未登录！')
+        } else if (res.data.status === 0) {
+          var data = res.data
+          this.houseResourceInfos = data.data
+        }
+      })
     }
+  },
+  mounted () {
+    this.getLandlordInfo()
   }
 }
 </script>

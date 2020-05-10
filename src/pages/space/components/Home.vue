@@ -26,15 +26,31 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'Home',
   data () {
     return {
-      temperature: 17,
-      humidity: 29
+      temperature: 0,
+      humidity: 0
     }
   },
   methods: {
+    getHomeInfo () {
+      axios.get('/api/getHomeInfo')
+        .then(res => {
+          if (res.data.status === 109) {
+            this.$router.push('/')
+            this.$message.error('您尚未登录！')
+          } else {
+            this.temperature = res.data.data.temperature
+            this.humidity = res.data.data.humidity
+            this.getTemperature()
+            this.getHumidity()
+          }
+        })
+    },
     getTemperature () {
       let columnar = this.$echarts.init(document.getElementById('temperature'))
       columnar.setOption({
@@ -81,8 +97,7 @@ export default {
     }
   },
   mounted () {
-    this.getTemperature()
-    this.getHumidity()
+    this.getHomeInfo()
   }
 }
 </script>

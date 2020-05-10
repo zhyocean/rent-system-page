@@ -4,27 +4,27 @@
       <div class="title">
         <span>我的收藏</span>
       </div>
-      <div v-if="cardItems.length > 0">
+      <div v-if="collectRooms.length > 0">
         <div class="content">
-          <el-card class="card" :body-style="{ padding: '0px' }" v-for="(item, index) of cardItems" :key="index">
-            <router-link to="/room/110">
-              <img :src="item.roomImg" class="card-img">
+          <el-card class="card" :body-style="{ padding: '0px' }" v-for="(item, index) of collectRooms" :key="index">
+            <router-link :to="'/room/'+item.id">
+              <img :src="item.roomPic" class="card-img">
             </router-link>
             <div class="card-content">
-              <router-link to="/room/110" class="card-router">
-                <span class="card-title">{{item.roomTitle}}</span>
+              <router-link :to="'/room/'+item.id" class="card-router">
+                <span class="card-title">{{item.houseName}}</span>
               </router-link>
               <div class="bottom clearfix">
               <time class="describe">
-                <span class="room-area">{{item.roomArea}}</span> | <span class="room-floor">{{item.roomFloor}}</span> | <span class="room-rent">{{item.roomRent}}</span></time>
-                <el-button :id="item.roomId" type="text" class="button" @click="deleteButton($event)">删除</el-button>
+                <span class="room-area">{{item.buildArea}}㎡</span> | <span class="room-floor">{{item.floor}}层</span> | <span class="room-rent">￥{{item.rent}}</span></time>
+                <el-button :id="item.id" type="text" class="button" @click="deleteButton($event)">删除</el-button>
               </div>
             </div>
           </el-card>
         </div>
-        <el-pagination class="paging" background layout="prev, pager, next" :total="1000"></el-pagination>
+        <!-- <el-pagination class="paging" background layout="prev, pager, next" :total="1000"></el-pagination> -->
       </div>
-      <div v-if="cardItems.length === 0">
+      <div v-if="collectRooms.length === 0">
         <div class="card-empty">
             这里空空如也
         </div>
@@ -34,37 +34,59 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'Collect',
   data () {
     return {
-      cardItems: [{
-        roomId: 12,
-        roomImg: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
-        roomTitle: '整租·叠翠庭苑2室1厅-南北',
-        roomArea: '86㎡',
-        roomFloor: '1/28层',
-        roomRent: '￥8600'
-      }, {
-        roomId: 13,
-        roomImg: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
-        roomTitle: '整租·叠翠庭苑2室1厅-南北',
-        roomArea: '86㎡',
-        roomFloor: '1/28层',
-        roomRent: '￥1600'
-      }
-      ]
+      collectRooms: []
     }
   },
   methods: {
+    getCollectInfo () {
+      axios({
+        url: '/api/getCollectInfo',
+        data: {
+        },
+        method: 'post',
+        header: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => {
+          if (res.data.status === 109) {
+            this.$router.push('/')
+            this.$message.error('您尚未登录！')
+          } else if (res.data.status === 0) {
+            this.collectRooms = res.data.data
+          }
+        })
+    },
     deleteButton (e) {
       var cardId = parseInt(e.currentTarget.id)
-      for (var i = 0; i < this.cardItems.length; i++) {
-        if (this.cardItems[i].roomId === cardId) {
-          this.cardItems.splice(i, 1)
+      for (var i = 0; i < this.collectRooms.length; i++) {
+        if (this.collectRooms[i].id === cardId) {
+          this.collectRooms.splice(i, 1)
+          axios.get('/api/deleteCollectRoom?roomId=' + cardId)
+            .then(res => {
+              if (res.data.status === 109) {
+                this.$router.push('/')
+                this.$message.error('您尚未登录！')
+              } else if (res.data.status === 0) {
+                this.$message({
+                  message: '删除收藏成功！',
+                  type: 'success'
+                })
+              }
+            })
+          break
         }
       }
     }
+  },
+  mounted () {
+    this.getCollectInfo()
   }
 }
 </script>
@@ -79,6 +101,7 @@ export default {
       width: 100%;
       display: block;
       cursor: pointer;
+      height: 200px;
     }
     .card-content{
       padding: 14px;

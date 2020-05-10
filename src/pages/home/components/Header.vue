@@ -115,6 +115,16 @@ export default {
     }
   },
   methods: {
+    getUserLoginInfo () {
+      axios.get('/api/getUserLoginInfo')
+        .then(res => {
+          if (res.data.status === 109) {
+            this.$store.commit('verifiedAccount', '')
+          } else if (res.data.status === 0) {
+            this.$store.commit('verifiedAccount', res.data.data)
+          }
+        })
+    },
     swichAccontHook () {
       this.loginMethod = (this.loginMethod === 'account-login' ? 'phone-login' : 'account-login')
       if (this.loginMethod === 'phone-login') {
@@ -314,6 +324,9 @@ export default {
         }
       }, 1000)
     }
+  },
+  mounted () {
+    this.getUserLoginInfo()
   }
 }
 </script>

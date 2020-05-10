@@ -3,7 +3,7 @@
     <el-row>
         <el-col :span="3" class="card">
           <div class="head-portrait">
-            <img src="https://image.ziroom.com/g2m3/M00/CD/94/ChAZVF6asm2AP4i6AAKy0xCDtGs316.jpg">
+            <img :src="userInfo.headPortrait">
           </div>
           <el-menu default-active="1" class="el-menu-vertical-demo navigation">
             <el-menu-item index="1" @click="myCollection">
@@ -38,9 +38,7 @@
         <space-home v-if="cardShow === 'my-home'"></space-home>
         <space-equipment v-if="cardShow === 'my-equipment'"></space-equipment>
         <space-landlord v-if="cardShow === 'iandlord'"
-        :phone="userInfo.phone"
-        :landlords="landlords"
-        :houseResourceInfos="houseResources"></space-landlord>
+        :phone="userInfo.phone"></space-landlord>
     </el-row>
   </div>
 </template>
@@ -51,18 +49,15 @@ import SpaceContract from './Contract'
 import SpaceHome from './Home'
 import SpaceEquipment from './Equipment'
 import SpaceLandlord from './Landlord'
-import axios from 'axios'
 
 export default {
   name: 'Card',
   props: {
-    userInfo: Object,
-    landlords: Array
+    userInfo: Object
   },
   data () {
     return {
-      cardShow: 'my-collection',
-      houseResources: []
+      cardShow: 'my-collection'
     }
   },
   components: {
@@ -91,25 +86,6 @@ export default {
     },
     iandlord () {
       this.cardShow = 'iandlord'
-      if (this.landlords.length > 0) {
-        axios({
-          url: '/api/getHouseResourceInfo',
-          data: {
-          },
-          method: 'post',
-          header: {
-            'Content-Type': 'application/json'
-          }
-        }).then(res => {
-          if (res.data.status === 109) {
-            this.$router.push('/')
-            this.$message.error('您尚未登录！')
-          } else if (res.data.status === 0) {
-            var data = res.data
-            this.houseResources = data.data
-          }
-        })
-      }
     }
   }
 }

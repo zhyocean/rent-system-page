@@ -27,7 +27,7 @@
             </el-table-column>
           </el-table>
         </template>
-        <el-button type="warning" class="add-device-btn" @click="dialogAddDevice = true">添加</el-button>
+        <el-button type="warning" class="add-device-btn" @click="dialogAddDevice = true" v-if="show">添加</el-button>
         <!-- 报修模态框 -->
         <el-dialog class="repair" title="报修" :visible.sync="dialogRepair" width="30%">
           <el-form :model="deviceForm">
@@ -86,7 +86,8 @@ export default {
       },
       addFacilityForm: {
         facilityName: ''
-      }
+      },
+      show: true
     }
   },
   methods: {
@@ -123,8 +124,11 @@ export default {
           if (res.data.status === 109) {
             this.$router.push('/')
             this.$message.error('您尚未登录！')
+          } else if (res.data.status === 119) {
+            this.show = false
           } else {
             this.deviceDate = res.data.data
+            this.show = true
           }
         })
     },

@@ -137,10 +137,4 @@ export default {
     text-align: center;
     margin-bottom: 10px;
   }
-  .card-empty{
-    text-align: center;
-    color: #999;
-    margin-top: 50px;
-    font-size: 18px;
-  }
 </style>

@@ -252,16 +252,16 @@ export default {
             if (res.data.status === 109) {
               this.$message.error('请先登录！')
               this.dialogOrderTable = false
-            } else if (res.data.status === 113) {
+            } else if (res.data.status === 0) {
               this.$message({
-                message: res.data.message,
-                type: 'warning'
+                message: '约看成功，请等待管家联系您',
+                type: 'success'
               })
               this.dialogOrderTable = false
             } else {
               this.$message({
-                message: '约看成功，请等待管家联系您',
-                type: 'success'
+                message: res.data.message,
+                type: 'warning'
               })
               this.dialogOrderTable = false
             }

@@ -29,6 +29,25 @@
               </template>
             </el-table-column>
           </el-table>
+          <!-- 支付弹框 -->
+            <el-dialog title="支付" :visible.sync="payDialog" width="30%">
+              <div class="pay-way">
+                <el-radio v-model="payWay" label="1">月付</el-radio>
+              </div>
+              <div class="pay-way">
+                <el-radio v-model="payWay" label="2">季付</el-radio>
+              </div>
+              <div class="pay-way">
+                <el-radio v-model="payWay" label="3">半年付</el-radio>
+              </div>
+              <div class="pay-way">
+                <el-radio v-model="payWay" label="4">年付</el-radio>
+              </div>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="payDialog = false">取 消</el-button>
+                <el-button type="primary" @click="payOrderClick">确 定</el-button>
+              </span>
+            </el-dialog>
         </template>
       </div>
     </div>
@@ -42,7 +61,10 @@ export default {
   name: 'Order',
   data () {
     return {
-      orderData: []
+      orderData: [],
+      payDialog: false,
+      payWay: '',
+      orderSerial: ''
     }
   },
   methods: {
@@ -87,6 +109,53 @@ export default {
             this.orderData = res.data.data
           }
         })
+    },
+    handlePayClick (index, row) {
+      this.payDialog = true
+      this.orderSerial = row.orderSerial
+    },
+    payOrderClick () {
+      if (this.payWay === '') {
+        this.$message({
+          message: '请选择支付方式',
+          type: 'warning'
+        })
+        return
+      }
+      axios({
+        url: '/api/payOrderClick',
+        data: {
+          orderSerial: this.orderSerial,
+          payWay: this.payWay
+        },
+        method: 'post',
+        header: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => {
+          if (res.data.status === 109) {
+            this.$router.push('/')
+            this.$message.error('您尚未登录！')
+          } else if (res.data.status === 116) {
+            this.$message({
+              message: res.data.message,
+              type: 'warning'
+            })
+          } else {
+            this.payDialog = false
+            this.$message({
+              message: '支付成功！',
+              type: 'success'
+            })
+            for (var i = 0; i < this.orderData.length; i++) {
+              if (this.orderData[i].orderSerial === this.orderSerial) {
+                this.orderData.splice(i, 1)
+                break
+              }
+            }
+          }
+        })
     }
   },
   mounted () {
@@ -96,4 +165,7 @@ export default {
 </script>
 
 <style scoped>
+  .pay-way{
+    margin: 10px auto;
+  }
 </style>

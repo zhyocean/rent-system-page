@@ -4,7 +4,7 @@
       <div class="title">
         <span>我的小屋</span>
       </div>
-      <div class="content">
+      <div class="content" v-show="show">
         <div class="monitoring-title">房屋温湿度实时监控</div>
         <div class="temperature">
           <div id="temperature" :style="{width: '300px', height: '300px'}"></div>
@@ -21,6 +21,11 @@
           </div>
         </div>
       </div>
+      <div v-show="!show">
+        <div class="card-empty">
+            这里空空如也
+        </div>
+      </div>
     </div>
   </el-col>
 </template>
@@ -33,7 +38,8 @@ export default {
   data () {
     return {
       temperature: 0,
-      humidity: 0
+      humidity: 0,
+      show: false
     }
   },
   methods: {
@@ -43,7 +49,10 @@ export default {
           if (res.data.status === 109) {
             this.$router.push('/')
             this.$message.error('您尚未登录！')
+          } else if (res.data.status === 119) {
+            this.show = false
           } else {
+            this.show = true
             this.temperature = res.data.data.temperature
             this.humidity = res.data.data.humidity
             this.getTemperature()
